@@ -7,8 +7,8 @@ const config = require('./config/config');
 
 
 //CALL API ROUTES
-const {initRoutes} = require('./Routes/api/apiRoutes')
-initRoutes(app)
+const {initApiRoutes} = require('./Routes/api/apiRoutes')
+initApiRoutes(app)
 //CAL WEB ROUTES
 
 

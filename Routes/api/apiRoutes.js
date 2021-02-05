@@ -12,10 +12,10 @@ require('./PacientesRoute')(router)
 
 
 
-let initRoutes = (app) => {
+let initApiRoutes = (app) => {
     app.use('/api/',router);
 }
 
-module.exports = {initRoutes};
+module.exports = {initApiRoutes};
 
 
