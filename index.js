@@ -21,6 +21,7 @@ app.use(express.static('public'))
 app.set('view engine','hbs');
 app.set('views', __dirname+'/views/');
 app.engine('hbs',handlebars({
+    layoutsDir:__dirname + "/views/layouts",
     extname:'hbs'
 }))
 
