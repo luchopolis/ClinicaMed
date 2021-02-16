@@ -45,8 +45,20 @@ class MPacientes {
         try {
             
             let sql = getUpdateRow(this.idColum,id,updateFields,this.tablename)
-            console.log(sql)
+            let update = await this.query(sql)
 
+            return update.affectedRows
+
+        } catch (error) {
+            
+        }
+    }
+
+    async getPaciente(id){
+        try {
+            let result = await this.query(`SELECT * FROM ${this.tablename} WHERE ${this.idColum}=${id}`)
+
+            return result;
         } catch (error) {
             
         }

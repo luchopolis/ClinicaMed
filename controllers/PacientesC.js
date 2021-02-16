@@ -42,12 +42,32 @@ async function update(id,pacienteObj){
     let Paciente = new MPacientes()
 
     try {
-        let update = Paciente.updatePaciente(id,pacienteObj)
+        let update = await Paciente.updatePaciente(id,pacienteObj)
+       
+        if(update == 1){
+            return true;
+        }
 
-        //return update
+        return false;
     } catch (error) {
-        
+        if(error) throw error;
     }
 }
 
-module.exports = {pacientes,create,update}
+async function getPaciente(id){
+    let Paciente = new MPacientes()
+
+    try {
+        let paciente = await Paciente.getPaciente(id)
+
+        if(paciente.length === 0){
+            return []
+        }
+        
+        return paciente
+    } catch (error) {
+        if(error) throw error;
+    }
+}
+
+module.exports = {pacientes,create,update,getPaciente}

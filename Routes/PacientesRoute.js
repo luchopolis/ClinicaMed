@@ -1,4 +1,4 @@
-const {pacientes,create,update} = require(`../controllers/PacientesC`)
+const {pacientes,create,update,getPaciente} = require(`../controllers/PacientesC`)
 
 module.exports = (router) => {
 
@@ -37,7 +37,14 @@ module.exports = (router) => {
         try {
             let id = req.params.idPaciente;
             let data = {...req.body}
-            await update(id,data)
+            let checkUpdated = await update(id,data)
+
+            if(checkUpdated){
+                res.status(200).json({message:"Registro actualizado"})
+            }else{
+                res.status(204).json({message:"Registro no actualizado"})
+            }
+            
         } catch (error) {
             if(error) throw error;
         }
@@ -47,8 +54,11 @@ module.exports = (router) => {
     router.get('/pacientes/:idPaciente',async (req,res,next) => {
         try {
             
+            let paciente = await getPaciente(req.params.idPaciente)
+
+            res.status(200).json(paciente)
         } catch (error) {
-            
+            if(error) throw error
         }
     })
 
