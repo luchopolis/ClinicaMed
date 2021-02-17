@@ -7,7 +7,7 @@ async function pacientes(){
 
     try {
         let pacientes =  await Pacientes.getPacientes()
-
+        
         return pacientes;
     } catch (error) {
         if(error) throw error
@@ -59,7 +59,7 @@ async function getPaciente(id){
 
     try {
         let paciente = await Paciente.getPaciente(id)
-
+        
         if(paciente.length === 0){
             return []
         }

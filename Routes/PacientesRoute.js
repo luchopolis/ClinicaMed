@@ -1,14 +1,16 @@
 const {pacientes,create,update,getPaciente} = require(`../controllers/PacientesC`)
 
+
+
 module.exports = (router) => {
 
     router.get('/pacientes',async (req,res,next) => {
         try {
             let data = await pacientes()
-            res.status(200).json(data)
-            //res.render('../views/Pacientes/Pacientes',{layout:"main"})
+            //res.status(200).json(data)
+            res.render('../views/Pacientes/Pacientes',{layout:"main",pacientes:data,total:data.length})
         } catch (error) {
-            if(error) throw error;
+           next(error)
         }
         
     })
@@ -23,12 +25,14 @@ module.exports = (router) => {
 
             if(result.insertId === 1){
                 res.status(200).json({"message":"Registro creado"})
+            }else{
+                res.status(204).json({"message":"Problema en crear el registro"})
             }
             
             
             
         } catch (error) {
-            if(error) throw error;
+            next(error)
         }
     })
 
@@ -46,7 +50,7 @@ module.exports = (router) => {
             }
             
         } catch (error) {
-            if(error) throw error;
+            next(error)
         }
     })
 
@@ -55,10 +59,15 @@ module.exports = (router) => {
         try {
             
             let paciente = await getPaciente(req.params.idPaciente)
-
-            res.status(200).json(paciente)
+            if(paciente.length === 0){
+                res.status(200).json({message:"No hay datos",paciente})
+            }else{
+                res.status(200).json(paciente)
+            }
+            
         } catch (error) {
-            if(error) throw error
+            
+            next(error)
         }
     })
 

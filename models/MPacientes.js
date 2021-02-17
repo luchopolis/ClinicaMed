@@ -25,7 +25,7 @@ class MPacientes {
 
             return result
         } catch (error) {
-            if(error) throw error;
+            
 
         }
     }
@@ -37,7 +37,7 @@ class MPacientes {
 
             return create
         } catch (error) {
-            if(error) throw error;
+            
         }
     }
 
@@ -57,7 +57,7 @@ class MPacientes {
     async getPaciente(id){
         try {
             let result = await this.query(`SELECT * FROM ${this.tablename} WHERE ${this.idColum}=${id}`)
-
+            
             return result;
         } catch (error) {
             

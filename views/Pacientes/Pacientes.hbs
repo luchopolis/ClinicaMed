@@ -1,6 +1,92 @@
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Pacientes</h1>
+<div id="wrapper">
+{{> sidebar}}
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Pacientes</h1>
+            </div>
+
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-users fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{total}}</div>
+                                <div>Pacientes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /row -->
+        <!-- table -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Listado de pacientes
+                    </div>
+                    <div class="panel-body">
+                        {{#if pacientes}}
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                        <th>Edad</th>
+                                        <th>Telefono</th>
+                                        <th>Telefono 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        {{#each pacientes}}
+                              <tr>
+                                  <td>{{this.Nombres}}</td>
+                                  <td>{{this.Apellidos}}</td>
+                                  <td>{{this.Edad}}</td>
+                                  <td>{{this.Telefono}}</td>
+                                  <td>{{this.TelefonoSecundario}}</td>
+                              </tr>  
+
+                                
+                            
+                        {{/each}}
+                        {{else}}
+                        {{/if}}
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <!-- /.col-lg-12 -->
+    <!-- /.container-fluid -->
 </div>
+</div>
+
+
+{{> footer}}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+{{!-- <script src="../js/dataTables/jquery.dataTables.min.js"></script>
+<script src="../js/dataTables/dataTables.bootstrap.min.js"></script> --}}
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>
