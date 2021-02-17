@@ -9,7 +9,7 @@ router.get('/login',(req,res,next) => {
 })
 
 require('./PacientesRoute')(router)
-
+require('./CitasRoute')(router)
 
 
 let initApiRoutes = (app) => {
