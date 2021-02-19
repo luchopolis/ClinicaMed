@@ -39,7 +39,7 @@ app.engine('hbs',handlebars({
 app.use(errorhandler)
 
 
-app.listen(3000,(error) => {
+app.listen(config.PORT,(error) => {
     if(error) throw error;
 
     console.log(`Running server at port ${config.PORT}` )

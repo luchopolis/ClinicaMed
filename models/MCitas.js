@@ -7,7 +7,7 @@ const ModelBase = require('./ModelBase')
 class MCitas extends ModelBase{
 
     fechaCita = "" //Format AAAA-MM-DD
-
+    idMedico = 0;
 
     constructor(){
         super("citas","id_Cita")
@@ -42,7 +42,56 @@ class MCitas extends ModelBase{
             
         }
     }
+
+    async getAlldailyPacientes(){
+        try{
+            
+            //Por la fecha, muestra las citas programadas del dia
+            let sql = `SELECT P.Nombres,P.Apellidos,C.Hora
+            FROM ${this.tableName} AS C
+            INNER JOIN pacientes AS P
+            ON C.id_Paciente = P.id_Paciente
+            WHERE C.FechaCita = "${this.fechaCita}"`
+
+            let result = await this.query(sql)
+            
+            return result;
+        }catch(error){
+
+        }
+    }
     
+    async getByDate(){
+        try {
+            //Para filtrar las citar por x fecha
+          
+            let sql = `SELECT P.Nombres,P.Apellidos,C.Hora
+            FROM ${this.tableName} AS C
+            INNER JOIN pacientes AS P
+            ON C.id_Paciente = P.id_Paciente
+            WHERE C.FechaCita = "${this.fechaCita}"`
+            
+            let result = await this.query(sql)
+            
+            return result;
+        } catch (error) {
+            
+        }
+    }
+
+    async scheduledAppointments(month,year){
+        try {
+            let sql = `SELECT * FROM ${this.tableName}
+            WHERE MONTH(citas.FechaCita) = ${month} AND YEAR(citas.FechaCita) = ${year}
+            AND citas.id_Medico = ${this.idMedico}`
+
+            let result = await this.query(sql)
+
+            return result;
+        } catch (error) {
+            
+        }
+    }
 }
 
 module.exports = MCitas;
