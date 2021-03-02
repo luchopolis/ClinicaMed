@@ -12,6 +12,7 @@ class MCitas extends ModelBase{
     constructor(){
         super("citas","id_Cita")
         this.conexion = new Connection()
+        this.Estado = 'Pendiente';
         this.query = promisifyQuery(this.conexion.connection.query,this.conexion.connection)
     }
 
@@ -88,6 +89,23 @@ class MCitas extends ModelBase{
             let result = await this.query(sql)
 
             return result;
+        } catch (error) {
+            
+        }
+    }
+
+
+    //Create a new date
+    async createDate(dateObject){
+        try {
+            let {id_Paciente,id_Medico,FechaCita,Hora} = dateObject
+
+            this.idMedico = id_Medico
+
+            let sql = `INSERT INTO ${this.tableName} (FechaCita,Hora,Estado,id_Paciente,id_Medico) VALUES (?,?,?,?,?)`;
+            let create = await this.query(sql,[FechaCita,Hora,this.Estado,id_Paciente,this.idMedico])
+
+            return create; 
         } catch (error) {
             
         }

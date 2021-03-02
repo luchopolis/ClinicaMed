@@ -78,5 +78,17 @@ async function getScheduledAppointments(idMedico,month = mm,year = aaaa){
     }
 }
 
+async function newDate(dateObject){
+    let Citas = new MCitas()
 
-module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments}
+    try {
+        let newDate = await Citas.createDate(dateObject)
+
+        return newDate;
+    } catch (error) {
+        
+    }
+}
+
+
+module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate}

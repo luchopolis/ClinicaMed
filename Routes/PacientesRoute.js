@@ -23,7 +23,8 @@ module.exports = (router) => {
 
             let result = await create(pacienteObj)
 
-            if(result.insertId === 1){
+  
+            if(result.affectedRows === 1){
                 res.status(200).json({"message":"Registro creado"})
             }else{
                 res.status(204).json({"message":"Problema en crear el registro"})

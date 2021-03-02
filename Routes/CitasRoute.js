@@ -1,6 +1,7 @@
 
-const {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments} = require(`../controllers/CitasC`)
+const {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate} = require(`../controllers/CitasC`)
 const {getPaciente} = require('../controllers/PacientesC')
+const isBodyEmpty = require('../middlewares/bodyEmpty')
 
 module.exports = (router) => {
 
@@ -63,7 +64,7 @@ module.exports = (router) => {
         try {
             let citasAgendadas
             let listaPacientes = []
-            let responseData
+            let cita
 
             let idMedico = req.params.idMedico
             let month = req.params.month
@@ -71,33 +72,47 @@ module.exports = (router) => {
             
             citasAgendadas = await getScheduledAppointments(idMedico,month,year);
             
-            
-            
-
+           
             for(let i = 0;i < citasAgendadas.length;i++){
                 
+                let {FechaCita,Hora} = citasAgendadas[i]
+                let fechaFormated = JSON.stringify(FechaCita).slice(1,10)
                 let paciente = citasAgendadas[i]["id_Paciente"]
                 let pacienteController = await getPaciente(paciente)
-           
-
-                listaPacientes.push(pacienteController)
+                
+                cita = {
+                    fechaFormated,
+                    Hora,
+                    paciente:pacienteController
+                }
+                
+                listaPacientes.push(cita)
             }
-            
-            
-            responseData = {
-                ...citasAgendadas,
-                listaPacientes
-            }
-
             
             res.status(200).json({
                 description:"Lista de citas agendadas",
-                responseData
+                listaPacientes
             })
            
+        } catch (error) {
+            next(error)
+        }
+    })
 
 
-            
+    //Ruta para crear nueva cita
+    router.post('/api/appointments',isBodyEmpty,async (req,res,next) => {
+        try {
+
+            let dateObject = {...req.body}
+
+            let date = await newDate(dateObject)
+           
+            if(date.affectedRows === 1){
+                res.status(200).json({"message":"Registro creado"})
+            }else{
+                res.status(204).json({"message":"Problema en crear el registro"})
+            }
 
         } catch (error) {
             next(error)
