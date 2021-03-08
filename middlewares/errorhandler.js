@@ -1,6 +1,6 @@
 function errorhandler(err,req,res,next){
-  console.error(err.message)
-  res.status(500).send('un error ha ocurrido')
+  console.error("error message:",{...err})
+  res.status(500).json({message:"Un error ha ocurrido",data:[]})
     
 }
 

@@ -16,6 +16,9 @@ class GrupoSanguineo extends ModelBase {
         this.query = promisifyQuery(this.conexion.connection.query,this.conexion.connection)
     }
 
+    set Nombre(Nombre){
+        this.Nombre = Nombre
+    }
     async getGruposSanguineos(){
         try {
             let sql = `SELECT * FROM ${this.tableName}`;
@@ -25,6 +28,42 @@ class GrupoSanguineo extends ModelBase {
             return result;
         } catch (error) {
             
+        }
+    }
+
+    async createGrupoSanguineo(){
+        try{
+            let sql = `INSERT INTO ${this.tableName} (Nombre) VALUES (?)`
+
+            let result = await this.query(sql,[this.Nombre])
+
+            return result
+        }catch(error){
+
+        }
+    }
+
+    async updateGrupo(id,updateFields){
+        try {
+            let sql = getUpdateRow(this.id_Column,id,updateFields,this.tableName)
+            let update = await this.query(sql)
+
+            return update.affectedRows
+        } catch (error) {
+            if (error) throw error
+        }
+    }
+
+    async getById(id){
+        try {
+            let sql = `SELECT Nombre FROM ${this.tableName} WHERE ${this.id_Column}=${id}`
+            
+            let get = await this.query(sql)
+            
+            return get
+
+        } catch (error) {
+            if (error) throw error
         }
     }
 
