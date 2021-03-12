@@ -27,7 +27,7 @@ class GrupoSanguineo extends ModelBase {
 
             return result;
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 
@@ -39,7 +39,7 @@ class GrupoSanguineo extends ModelBase {
 
             return result
         }catch(error){
-
+            if (error) throw error
         }
     }
 

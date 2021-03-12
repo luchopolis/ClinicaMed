@@ -1,5 +1,5 @@
 const MPacientes = require('../models/MPacientes')
-
+const ExpedienteModel = require('../models/Expediente.model');
 
 
 async function pacientes(){
@@ -70,4 +70,19 @@ async function getPaciente(id){
     }
 }
 
-module.exports = {pacientes,create,update,getPaciente}
+
+//Mostrar el expediente de X paciente
+async function getPacienteExpediente(id){
+    
+    let Expediente = new ExpedienteModel()
+    try {
+        Expediente.id_Paciente = id
+        
+        let result = await Expediente.showExpediente()
+
+        return result
+    } catch (error) {
+        if(error) throw error;
+    }
+}
+module.exports = {pacientes,create,update,getPaciente,getPacienteExpediente}

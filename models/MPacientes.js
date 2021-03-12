@@ -25,8 +25,7 @@ class MPacientes {
 
             return result
         } catch (error) {
-            
-
+            if (error) throw error
         }
     }
 
@@ -37,7 +36,7 @@ class MPacientes {
 
             return create
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 
@@ -50,7 +49,7 @@ class MPacientes {
             return update.affectedRows
 
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 
@@ -60,7 +59,7 @@ class MPacientes {
             
             return result;
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 }

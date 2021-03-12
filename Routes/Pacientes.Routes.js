@@ -1,4 +1,4 @@
-const {pacientes,create,update,getPaciente} = require(`../controllers/PacientesC`)
+const {pacientes,create,update,getPaciente,getPacienteExpediente} = require(`../controllers/PacientesC`)
 
 
 
@@ -68,6 +68,19 @@ module.exports = (router) => {
             
         } catch (error) {
             
+            next(error)
+        }
+    })
+
+    //Expediente del paciente
+    router.get('/pacientes/expediente/:idPaciente',async (req,res,next) => {
+
+        let id = req.params.idPaciente
+        try {
+            let expediente = await getPacienteExpediente(id)
+
+            res.status(200).json(expediente)
+        } catch (error) {
             next(error)
         }
     })

@@ -8,7 +8,7 @@ router.get('/login',(req,res,next) => {
     res.render('login',{layout:""})
 })
 
-require('./PacientesRoute')(router)
+require('./Pacientes.Routes')(router)
 require('./CitasRoute')(router)
 require('./GrupoSanguineoRoute')(router)
 

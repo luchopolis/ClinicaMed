@@ -40,7 +40,7 @@ class MCitas extends ModelBase{
 
             return result
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 
@@ -58,7 +58,7 @@ class MCitas extends ModelBase{
             
             return result;
         }catch(error){
-
+            if (error) throw error
         }
     }
     
@@ -76,7 +76,7 @@ class MCitas extends ModelBase{
             
             return result;
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 
@@ -90,7 +90,7 @@ class MCitas extends ModelBase{
 
             return result;
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 
@@ -107,7 +107,7 @@ class MCitas extends ModelBase{
 
             return create; 
         } catch (error) {
-            
+            if (error) throw error
         }
     }
 }
