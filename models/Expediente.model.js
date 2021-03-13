@@ -68,7 +68,7 @@ class ExpedienteModel extends ModelBase{
             ON Exp.id_Paciente = P.id_Paciente
             INNER JOIN padecimientos as PD
             ON Exp.id_Expediente = PD.id_Expediente
-            INNER JOIN Alergias as A
+            INNER JOIN alergias as A
             ON Exp.id_Expediente = A.id_Expediente
             WHERE P.id_Paciente = ${this.id_Paciente}
             `
