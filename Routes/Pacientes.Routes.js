@@ -1,6 +1,7 @@
 const {pacientes,create,update,getPaciente,getPacienteExpediente} = require(`../controllers/PacientesC`)
 
-
+//middlleware auth token
+const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
 
 module.exports = (router) => {
 
@@ -56,7 +57,7 @@ module.exports = (router) => {
     })
 
     //Route to get by id
-    router.get('/pacientes/:idPaciente',async (req,res,next) => {
+    router.get('/pacientes/:idPaciente',verifyJwtInbound,async (req,res,next) => {
         try {
             
             let paciente = await getPaciente(req.params.idPaciente)

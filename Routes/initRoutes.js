@@ -11,6 +11,8 @@ router.get('/login',(req,res,next) => {
 require('./Pacientes.Routes')(router)
 require('./CitasRoute')(router)
 require('./GrupoSanguineoRoute')(router)
+require('./Expedientes.routes')(router)
+require('./auth/auth.routes')(router)
 
 let initApiRoutes = (app) => {
     

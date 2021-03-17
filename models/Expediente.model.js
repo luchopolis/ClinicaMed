@@ -5,11 +5,11 @@ const {promisifyQuery,getUpdateRow}= require('../utils/utils')
 //ModelBase
 const ModelBase = require('./ModelBase')
 
-FechaCreacion = ''
-Peso = '' //Libras
-Ocupacion = ''
-id_TipoSangre = ''
-id_Paciente = ''
+_FechaCreacion = ''
+_Peso = '' //Libras
+_Ocupacion = ''
+_idTipoSangre = ''
+_idPaciente = ''
 
 class ExpedienteModel extends ModelBase{
 
@@ -20,29 +20,31 @@ class ExpedienteModel extends ModelBase{
     }
 
     set FechaCreacion(date){
-        this.FechaCreacion = date
+        this._FechaCreacion = date
     }
 
     set Peso(peso){
-        this.Peso = peso
+        this._Peso = peso
     }
 
     set Ocupacion(data){
-        this.Ocupacion = data
+        this._Ocupacion = data
     }
 
     set id_TipoSangre(id){
-        this.id_TipoSangre = id
+        this._idTipoSangre = id
     }
 
-    
+    set id_Paciente(id){
+        this._idPaciente = id
+    }
 
     async newExpediente(){
         try {
             let sql = `INSERT INTO ${this.tableName} (id_TipoSangre,FechaCreacion,Peso,Ocupacion,id_Paciente) VALUES (?,?,?,?,?)` 
 
 
-            let create = await this.query(sql,[this.id_TipoSangre,this.FechaCreacion,this.Peso,this.Ocupacion,this.id_Paciente])
+            let create = await this.query(sql,[this._idTipoSangre,this._FechaCreacion,this._Peso,this._Ocupacion,this._idPaciente])
 
             return create
         } catch (error) {
@@ -70,7 +72,7 @@ class ExpedienteModel extends ModelBase{
             ON Exp.id_Expediente = PD.id_Expediente
             INNER JOIN alergias as A
             ON Exp.id_Expediente = A.id_Expediente
-            WHERE P.id_Paciente = ${this.id_Paciente}
+            WHERE P.id_Paciente = ${this._idPaciente}
             `
 
             
