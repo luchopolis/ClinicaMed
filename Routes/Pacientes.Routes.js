@@ -2,10 +2,11 @@ const {pacientes,create,update,getPaciente,getPacienteExpediente} = require(`../
 
 //middlleware auth token
 const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
+const { isLoggedIn } = require('../middlewares/auth/authLogin')
 
 module.exports = (router) => {
 
-    router.get('/pacientes',async (req,res,next) => {
+    router.get('/pacientes',isLoggedIn,async (req,res,next) => {
         try {
             let data = await pacientes()
             //res.status(200).json(data)

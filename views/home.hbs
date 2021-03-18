@@ -1,1 +1,10 @@
-<h4>Clinica Med</h4>>
+<h4>Clinica Med</h4>
+
+{{#if user}}
+    <h4>Hola {{ user.Username }}</h4>
+{{/if}}
+
+{{#if (Rol user.Rol)}}
+    <h5>Hola sos un medico boludo</h5>
+{{/if}}
+

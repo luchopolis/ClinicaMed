@@ -8,6 +8,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Toast tr-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" />
 </head>
 <body>
 
@@ -18,7 +21,7 @@
         
  	<div class="col-12 d-flex justify-content-center">
 
-    	<form>
+    	<form action="/login" method="POST">
           <div class="form-group">
           	  <div class="row justify-content-center">
                   <h4 style="color:#1d3557;">Med</h4>
@@ -26,14 +29,14 @@
               </div>
               <div class="row mb-2">
                 <label for="username">Usuario</label>
-                <input class="form-control" placeholder="Usuario" type="text">
+                <input class="form-control" placeholder="Usuario" name="username" type="text">
               </div>
               <div class="row mb-2">
                   <label for="password">Contraseña</label>
-                  <input class="form-control" placeholder="********" type="password">
+                  <input class="form-control" placeholder="********" name="password" type="password">
               </div>
               <div class="row mb-2">
-                  <input class="form-control" type="button" value="Ingresar" style="background-color:#457b9d;color:white;"/>
+                  <input type="submit" class="form-control" type="button" value="Ingresar" style="background-color:#457b9d;color:white;"/>
               </div>
               <div class="row">
                   <a href="#">recuperar contraseña</a>
@@ -44,6 +47,11 @@
  </div>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 
+<script>
+
+  toastr.error('Are you the 6 fingered man?')
+</script>
 </body>
 </html>
