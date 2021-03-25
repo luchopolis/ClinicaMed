@@ -89,10 +89,15 @@ module.exports = (router) => {
                 listaPacientes.push(cita)
             }
             
-            res.status(200).json({
-                description:"Lista de citas agendadas",
-                listaPacientes
-            })
+            if(listaPacientes.length === 0){
+                res.status(200).json({description:'No hay datos para esta fecha',listaPacientes})
+            }else{
+                res.status(200).json({
+                    description:"Lista de citas agendadas",
+                    listaPacientes
+                })
+            }
+            
            
         } catch (error) {
             next(error)

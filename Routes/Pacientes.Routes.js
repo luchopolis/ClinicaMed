@@ -58,7 +58,7 @@ module.exports = (router) => {
     })
 
     //Route to get by id
-    router.get('/pacientes/:idPaciente',verifyJwtInbound,async (req,res,next) => {
+    router.get('/pacientes/:idPaciente',async (req,res,next) => {
         try {
             
             let paciente = await getPaciente(req.params.idPaciente)

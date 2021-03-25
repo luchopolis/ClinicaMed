@@ -29,7 +29,7 @@ class MCitas extends ModelBase{
             //todo esto usando el id del medico para que solo muestre los pacientes por X medico
             //y que sean los pacientes del dia.
 
-            let sql = `SELECT P.Nombres,P.Apellidos,C.Hora 
+            let sql = `SELECT P.id_Paciente,P.Nombres,P.Apellidos,C.Hora,C.FechaCita
             FROM ${this.tableName} AS C 
             INNER JOIN pacientes AS P 
             ON C.id_Paciente = P.id_Paciente 
@@ -66,7 +66,7 @@ class MCitas extends ModelBase{
         try {
             //Para filtrar las citar por x fecha
           
-            let sql = `SELECT P.Nombres,P.Apellidos,C.Hora
+            let sql = `SELECT P.id_Paciente,P.Nombres,P.Apellidos,C.Hora,C.FechaCita
             FROM ${this.tableName} AS C
             INNER JOIN pacientes AS P
             ON C.id_Paciente = P.id_Paciente
@@ -81,6 +81,7 @@ class MCitas extends ModelBase{
     }
 
     async scheduledAppointments(month,year){
+        
         try {
             let sql = `SELECT * FROM ${this.tableName}
             WHERE MONTH(citas.FechaCita) = ${month} AND YEAR(citas.FechaCita) = ${year}
