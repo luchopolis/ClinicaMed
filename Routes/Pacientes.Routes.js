@@ -80,8 +80,9 @@ module.exports = (router) => {
         let id = req.params.idPaciente
         try {
             let expediente = await getPacienteExpediente(id)
-
-            res.status(200).json(expediente)
+            res.render('../views/Pacientes/Paciente',{layout:"main",paciente:expediente[0]})
+            
+           
         } catch (error) {
             next(error)
         }

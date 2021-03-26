@@ -1,0 +1,98 @@
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Información del paciente</h1>
+                </div>
+
+                 {{#if paciente}}
+            <div class="row p-2" style="height: 65px;">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading text-center" style="font-size: 20px;">
+                                    Detalles del paciente
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center" style="margin-top: 10px;">
+                                            <b style="font-size: 22px;">{{paciente.NombrePaciente}}</b>
+                                        </div>
+                                        <div class="col-lg-12 text-center " style="margin-top: 10px;">
+                                            <p style="font-size:18px;">{{paciente.Tipo_Sangre}}</p>
+                                        </div>
+
+                                        <div class="row text-center" style="margin-top: 80px;padding:0px 10px 0px 10px;">
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-default">
+                                                    <p>{{paciente.Peso}}</p>
+                                                    <p><b>Peso</b></p>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-default">
+                                                    <p style="text-transform: capitalize;">{{paciente.Ocupacion}}</p>
+                                                    <p><b>Ocupación</b></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-default">
+                                                    <p>{{paciente.Edad}}</p>
+                                                    <p><b>Edad</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6" style="height: 130px;">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Alergias
+                            </div>
+                            <div class="panel-body" style="height: 65px;">
+                                <div class="col-lg-12">
+                                    <ul>
+                                       <li>{{paciente.Alergias}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="height: 130px;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Padecimientos
+                            </div>
+                            <div class="panel-body" style="height: 77px;">
+                                <div class="col-lg-12">
+                                    <ul>
+                                       <li>{{paciente.Padecimientos}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {{/if}}
+            </div>
+            
+           
+
+            
+            
+        </div>
+    </div>
+</div>
+{{>footer}}
