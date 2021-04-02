@@ -5,7 +5,23 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const session = require('express-session');
 const passport = require('passport');
+const path = require('path');
 
+//minify
+var minifyHTML = require('express-minify-html');
+ 
+app.use(minifyHTML({
+    override:      true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  true
+    }
+}));
 //errorhandler
 const errorhandler = require('./middlewares/errorhandler')
 
@@ -53,7 +69,9 @@ app.use((req,res,next) => {
     next();
 })
 
+app.use('/private', express.static(path.join(__dirname, 'scripts')));
 app.use(express.static('public'))
+
 
 //CALL API ROUTES
 const {initApiRoutes} = require('./Routes/initRoutes')

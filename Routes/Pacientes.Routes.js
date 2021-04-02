@@ -1,4 +1,4 @@
-const {pacientes,create,update,getPaciente,getPacienteExpediente} = require(`../controllers/PacientesC`)
+const {pacientes,create,update,getPaciente,getPacienteExpediente,allAppointments} = require(`../controllers/PacientesC`)
 
 //middlleware auth token
 const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
@@ -80,7 +80,9 @@ module.exports = (router) => {
         let id = req.params.idPaciente
         try {
             let expediente = await getPacienteExpediente(id)
-            res.render('../views/Pacientes/Paciente',{layout:"main",paciente:expediente[0]})
+            let appointmentsRecords = await allAppointments(id)
+            
+            res.render('../views/Pacientes/Paciente',{layout:"main",paciente:expediente[0],pacienteCitas:appointmentsRecords})
             
            
         } catch (error) {

@@ -1,5 +1,7 @@
 const MPacientes = require('../models/MPacientes')
+
 const ExpedienteModel = require('../models/Expediente.model');
+const MCitas = require('../models/MCitas');
 
 
 async function pacientes(){
@@ -85,4 +87,15 @@ async function getPacienteExpediente(id){
         if(error) throw error;
     }
 }
-module.exports = {pacientes,create,update,getPaciente,getPacienteExpediente}
+
+async function allAppointments(id_Paciente){
+    try {
+        let pacienteCita = new MCitas()
+        let datos = pacienteCita.getAppointments(id_Paciente)
+
+        return datos;
+    } catch (error) {
+        if(error) throw error;
+    }
+}
+module.exports = {pacientes,create,update,getPaciente,getPacienteExpediente,allAppointments}

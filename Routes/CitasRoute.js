@@ -3,6 +3,7 @@ const {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDa
 const {getPaciente} = require('../controllers/PacientesC')
 const isBodyEmpty = require('../middlewares/bodyEmpty')
 
+const { isLoggedIn } = require('../middlewares/auth/authLogin')
 module.exports = (router) => {
 
     //route para citas diarias -- daily appointments por id del medico
@@ -60,7 +61,7 @@ module.exports = (router) => {
     //Tambien para la recepcion, y mostrar el control del medico
 
     //Los parametros month y year son opcionales, si no se asignan, retornara datos del mes actual y el anio actual
-    router.get('/api/appointments/Scheduled/:idMedico/:month?/:year?',async (req,res,next) => {
+    router.get('/api/appointments/Scheduled/:idMedico/:month?/:year?',isLoggedIn,async (req,res,next) => {
         try {
             let citasAgendadas
             let listaPacientes = []

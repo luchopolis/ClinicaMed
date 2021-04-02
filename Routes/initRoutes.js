@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+
 const { isLoggedIn } = require('../middlewares/auth/authLogin')
 //Routes
 //Set the router for the routes

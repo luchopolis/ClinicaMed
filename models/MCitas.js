@@ -111,6 +111,25 @@ class MCitas extends ModelBase{
             if (error) throw error
         }
     }
+
+    //Obtener todas las citas médicas de un paciente X
+    async getAppointments(id_Paciente){
+        try {
+            let sql = `SELECT date_format(C.FechaCita,'%Y-%m-%d') as FechaCita,C.Hora,C.Estado,concat_ws(" ",Med.Nombres,Med.Apellidos) as Doctor
+            FROM citas as C 
+            INNER JOIN medicos as Med
+            ON C.id_Medico = Med.id_Medico
+            INNER JOIN pacientes as Pa
+            ON C.id_Paciente = Pa.id_Paciente
+            WHERE C.id_Paciente = ${id_Paciente}`;
+
+            let pacienteAppointments = await this.query(sql);
+
+            return pacienteAppointments;
+        } catch (error) {
+            if (error) throw error;
+        }
+    }
 }
 
 module.exports = MCitas;
