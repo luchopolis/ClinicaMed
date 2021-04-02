@@ -1,4 +1,4 @@
-const {medico,createMedico,updateMedico,getMedico} = require(`../controllers/Medicos`)
+const {medico,createMedico,updateMedico,getMedico} = require('../controllers/Medicos')
 
 //middlleware auth token
 /* const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
@@ -17,7 +17,7 @@ module.exports = (router) => {
         
     })
 
-    router.post('/Medicos',async (req,res,next) => {
+    router.post('/medicos',async (req,res,next) => {
         try {
            
            
