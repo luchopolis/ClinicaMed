@@ -1,11 +1,27 @@
+<style>
+    #div-btnEditarPaciente {
+        margin-bottom: 2%;
+    }
+
+    #btnEditarPaciente {
+        outline: none;
+    }
+</style>
 <div id="wrapper">
     {{>sidebar}}
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Información del paciente</h1>
+                    <div class="col-6">
+                        <h1 class="page-header">Información del paciente</h1>
+                    </div>
+                    <div class="col-6" id="div-btnEditarPaciente">
+                        <button id="btnEditarPaciente" class="btn btn-success" data-toggle="modal"
+                            href="#mi_modal">Editar expediente</button>
+                    </div>
                 </div>
+
             </div>
             {{#if paciente}}
             <div class="row p-2" style="height: 65px;">
@@ -101,10 +117,20 @@
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped" style="width:100%">
-                                    <tr>
-                                        <th>Medicamentos</th>
-                                        <th>Duración del tratamiento</th>
-                                    </tr>
+                                    <thead>
+                                        <tr>
+                                            <th>Medicamentos</th>
+                                            <th>Duración del tratamiento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#if medicamentos}}
+                                        <tr>
+                                            <td>{{medicaments medicamentos}}</td>
+                                            <td>{{tratamientoDuracion}}</td>
+                                        </tr>
+                                        {{/if}}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -136,12 +162,12 @@
                                     <tbody>
                                         {{#if pacienteCitas}}
                                         {{#each pacienteCitas}}
-                                            <tr>
-                                                <td>{{this.FechaCita}}</td>
-                                                <td>{{this.Hora}}</td>
-                                                <td>{{this.Doctor}}</td>
-                                                <td>{{this.Estado}}</td>
-                                            </tr>
+                                        <tr>
+                                            <td>{{this.FechaCita}}</td>
+                                            <td>{{this.Hora}}</td>
+                                            <td>{{this.Doctor}}</td>
+                                            <td>{{this.Estado}}</td>
+                                        </tr>
                                         {{/each}}
                                         {{/if}}
                                     </tbody>
@@ -153,7 +179,230 @@
             </div>
 
         </div>
+
+        <div class="modal fade" id="mi_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Edicion de expediente</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="padding:15px">
+                            <div class="form-container">
+                                <ul class="nav nav-tabs" id="tab-paciente" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="personal-tab" data-toggle="tab" href="#personal"
+                                            role="tab" aria-controls="personal" aria-selected="true">Personal</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="padecimientos-tab" data-toggle="tab"
+                                            href="#padecimientos" role="tab" aria-controls="padecimientos"
+                                            aria-selected="false">Padecimientos</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="alergias-tab" data-toggle="tab" href="#alergias"
+                                            role="tab" aria-controls="alergias" aria-selected="false">Alergias</a>
+                                    </li>
+
+                                </ul>
+                                <div class="col-lg-12">
+                                    <form action="/api/expedientes/update/{{id_paciente}}" method="POST">
+                                        <div class="tab-content" id="myTabContent">
+
+
+
+                                            {{!-- INFORMACION PERSONAL DEL PACIENTE --}}
+                                            {{!-- <div class="tab-pane fade" id="personal" role="tabpanel"
+                                                aria-labelledby="personal-tab">
+
+                                                <div class="row">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h5>Informacion del paciente</h5>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Nombres del paciente</label>
+                                                                    <input type="text" class="form-control" id="nombres"
+                                                                        name="nombres" placeholder="Nombres"
+                                                                        value="{{paciente.Nombres}}">
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Apellidos del paciente</label>
+                                                                    <input type="text" id="apellidos"
+                                                                        class="form-control" name="apellidos"
+                                                                        placeholder="Apellidos"
+                                                                        value="{{paciente.Apellidos}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Fecha de Nacimiento </label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="fecha_Nacimiento" name="fecha_Nacimiento"
+                                                                        placeholder="Fecha de Nacimiento">
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Edad</label>
+                                                                    <input type="text" id="edad" name="edad"
+                                                                        placeholder="Edad" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-12">
+                                                                    <label for="">Dirección</label>
+                                                                    <input type="text" id="address" name="address"
+                                                                        placeholder="Direccion" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Telefono</label>
+                                                                    <input type="text" id="phone" name="phone"
+                                                                        placeholder="Telefono" class="form-control">
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Telefono secundario</label>
+                                                                    <input type="text" id="phoneSecondary"
+                                                                        name="phoneSecondary" placeholder="Telefono"
+                                                                        class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> --}}
+                                            
+                                            <!-- INFORMACION DEL EXPEDIENTE-->
+                                            <div class="tab-pane fade" id="personal" role="tabpanel"
+                                                aria-labelledby="personal-tab" style="margin-top: 10px;">
+
+                                                <div class="row">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h5>Informacion del paciente</h5>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Tipo de sangre</label>
+                                                                    <select name="tipoSangre" id="tipoSangre" class="form-control">
+                                                                        {{#if gruposSanguineos}}
+                                                                            
+                                                                           {{setToCheck tipoSangre}}
+                                                                           {{#each gruposSanguineos}}
+                                                                                {{#if (checkbloodtype this.Nombre)}}
+                                                                                    <option value="{{this.id_TipoSangre}}" selected style="color: red;">{{this.Nombre}}</option>
+                                                                                    {{else}}
+                                                                                    <option value="{{this.id_TipoSangre}}">{{this.Nombre}}</option>
+                                                                                {{/if}}
+                                                                           {{/each}}
+                                                                            
+                                                                        {{/if}}
+                                                                    </select>
+                                                                    
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Peso (lbs)</label>
+                                                                    <input type="text" id="peso"
+                                                                        class="form-control" name="peso"
+                                                                        placeholder="peso (lbs)"
+                                                                        value="{{paciente.Peso}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-12">
+                                                                    <label for="">Ocupación</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="ocupacion" name="ocupacion"
+                                                                        placeholder="Ocupación" value="{{paciente.Ocupacion}}">
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{!-- PADECIMIENTOS --}}
+                                            <div class="tab-pane fade" id="padecimientos" role="tabpanel"
+                                                aria-labelledby="padecimientos-tab" style="margin-top: 10px;">
+                                                <div class="row">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h5>Padecimientos</h5>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <textarea name="padecimientos"
+                                                                        id="padecimientos-data" cols="30" rows="10"
+                                                                        class="form-control">{{paciente.Padecimientos}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{!-- ALERGIAS --}}
+                                            <div class="tab-pane fade" id="alergias" role="tabpanel"
+                                                aria-labelledby="alergias-tab" style="margin-top: 10px;">
+                                                <div class="row">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h5>Alergias</h5>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <textarea name="alergias" id="alergias-data"
+                                                                        cols="30" rows="10"
+                                                                        class="form-control">{{paciente.Alergias}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="row">
+                                            <input type="submit" class="btn btn-success" value="Guardar">
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </div>
+</div>
 {{>footer}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+<script>
+    {{#if successlogin}}
+        toastr.success('{{ successlogin }}')
+    {{/if}}
+
+    {{#if loginwrong}}
+        toastr.success('{{ loginwrong }}')
+    {{/if}}
+</script>

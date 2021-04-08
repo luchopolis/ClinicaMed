@@ -12,6 +12,8 @@ const { isLoggedIn } = require('../middlewares/auth/authLogin')
 //     res.render('home',{layout:"main"})
 // })
 
+
+
 require('./Pacientes.Routes')(router)
 require('./CitasRoute')(router)
 require('./GrupoSanguineoRoute')(router)

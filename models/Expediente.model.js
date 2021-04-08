@@ -84,6 +84,39 @@ class ExpedienteModel extends ModelBase{
             if (error) throw error
         }
     }
+    async getExpedienteByPacienteId(id_paciente){
+        try {
+            
+            let sql = `SELECT id_Expediente,FechaCreacion FROM ${this.tableName} where id_Paciente = ${id_paciente}`;
+            let result = await this.query(sql)
+            
+            return result;
+        } catch (error) {
+            if (error) throw error;
+        }
+
+    }
+    async updateExpediente(idExpediente,data){
+        try {
+            let info = [];
+            let {tipoSangre,ocupacion,peso} =  data;
+            let obj = {
+                'id_TipoSangre':tipoSangre,
+                'Peso':peso,
+                'Ocupacion':ocupacion
+            }
+
+            let sql = await getUpdateRow(this.id_Column,idExpediente,obj,this.tableName)
+            
+            let result = await this.query(sql);
+
+            console.log(result);
+            return result;
+           
+        } catch (error) {
+            if (error) throw error;
+        }
+    }
 
 }
 

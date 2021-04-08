@@ -62,6 +62,7 @@
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
                                                 <th>Hora asignada</th>
+                                                <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -75,6 +76,7 @@
                                                 </td>
                                                 <td>{{this.Apellidos}}</td>
                                                 <td>{{this.Hora}}</td>
+                                                <td><a href="#" style="font-size: 18px;text-decoration:none"><i class="fa fa-pencil-square"></i> Atender cita</a> </td>
                                             </tr>
 
 
@@ -221,6 +223,10 @@
 
                 let loader = document.querySelector('.loading')
 
+
+                {{#if successlogin}}
+                    toastr.success('{{successlogin}}')
+                {{/if}}
                 $.ajax({
                     url: `/api/appointments/Scheduled/{{medico}}`,
                     success: function (response) {

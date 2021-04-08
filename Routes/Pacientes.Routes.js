@@ -1,5 +1,8 @@
 const {pacientes,create,update,getPaciente,getPacienteExpediente,allAppointments} = require(`../controllers/PacientesC`)
 
+const {pacienteTratamiento} = require('../controllers/TratamientoMedico.Controller')
+const {gruposSanguineos} = require('../controllers/GrupoSanguineoC');
+
 //middlleware auth token
 const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
 const { isLoggedIn } = require('../middlewares/auth/authLogin')
@@ -81,8 +84,14 @@ module.exports = (router) => {
         try {
             let expediente = await getPacienteExpediente(id)
             let appointmentsRecords = await allAppointments(id)
+
+            let pacienteTreatment = await pacienteTratamiento(id)
+            let duracionTratamiento = pacienteTreatment.DuracionTratamiento
+            let MedicamentsList = JSON.parse(pacienteTreatment.Medicamentos)
+            let GruposSanguineos = await gruposSanguineos();
             
-            res.render('../views/Pacientes/Paciente',{layout:"main",paciente:expediente[0],pacienteCitas:appointmentsRecords})
+            
+            res.render('../views/Pacientes/Paciente',{layout:"main",id_paciente:id,paciente:expediente[0],tipoSangre:expediente[0].Tipo_Sangre,pacienteCitas:appointmentsRecords,tratamientoDuracion:duracionTratamiento,medicamentos:MedicamentsList,gruposSanguineos:GruposSanguineos})
             
            
         } catch (error) {

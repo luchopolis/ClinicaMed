@@ -7,7 +7,7 @@ let dd = date.getDate();
 let mm = date.getMonth()+1;
 let aaaa = date.getFullYear()
 
-let actualDay = `${aaaa}-${mm}-${dd}`;
+let actualDay = `${aaaa}-${03}-${23}`;
 //Mostrar los pacientes diarios a un medico en especifico
 async function dailyPacientes(idMedico){
     

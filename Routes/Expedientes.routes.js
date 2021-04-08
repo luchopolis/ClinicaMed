@@ -1,4 +1,4 @@
-const {getPacienteExpediente} = require('../controllers/Expediente.controller')
+const {getPacienteExpediente,getIdExpediente,updateExpediente} = require('../controllers/Expediente.controller')
 const {asignarPadecimientos} = require('../controllers/Padecimientos.controller')
 const {asignarAlergias} = require('../controllers/Alergias.Controller')
 
@@ -43,6 +43,28 @@ module.exports = (router) => {
             }else{
                 res.status(204).json({"message":"Problema en crear el registro"})
             }           
+
+        } catch (error) {
+            next(error)
+        }
+    });
+
+    router.post('/api/expedientes/update/:idPaciente',async function(req,res,next){
+        
+        let paciente_id = req.params.idPaciente;
+        let data = {...req.body}
+        try {
+            let Expediente = await getIdExpediente(paciente_id)
+            let idExpediente = Expediente[0].id_Expediente
+            
+            let update = await updateExpediente(idExpediente,data)
+            //aplicar el promise all para actualizar alergias y padecimientos
+            if(update.affectedRows == 1){
+                req.flash('successlogin',`Datos actualizados correctamente`)
+                res.redirect('back');
+            }else{
+                req.flash('loginwrong','Erro en actualizar datos, intente de nuevo')
+            }
 
         } catch (error) {
             next(error)

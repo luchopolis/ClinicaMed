@@ -19,5 +19,29 @@ async function getPacienteExpediente(idPaciente,data){
     }
 }
 
+//Retorna un expediente, sera usado para ac
+async function getIdExpediente(idPaciente){
+    try {
+        let Expediente = new ExpedienteModel()
+        let data = await Expediente.getExpedienteByPacienteId(idPaciente);
 
-module.exports = {getPacienteExpediente}
+        return data;
+    } catch (error) {
+        if (error) throw error;
+    }
+}
+
+
+async function updateExpediente(idExpediente,data){
+    try {
+        let Expediente = new ExpedienteModel();
+        let updt = await Expediente.updateExpediente(idExpediente,data);
+
+        return updt;
+
+    } catch (error) {
+        if (error) throw error;
+    }
+}
+
+module.exports = {getPacienteExpediente,getIdExpediente,updateExpediente}

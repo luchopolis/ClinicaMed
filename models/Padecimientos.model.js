@@ -37,6 +37,8 @@ class PadecimientosModel extends ModelBase {
             if (error) throw error
         }
     }
+
+    
 }
 
 module.exports = PadecimientosModel

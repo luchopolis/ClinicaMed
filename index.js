@@ -7,6 +7,9 @@ const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
 
+//connect flash
+const flash = require('connect-flash');
+
 //minify
 var minifyHTML = require('express-minify-html');
  
@@ -42,6 +45,7 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash())
 
 //SET HANDLERBARS
 app.set('view engine','hbs');
@@ -53,7 +57,7 @@ app.engine('hbs',handlebars({
 }))
 
 app.use(morgan('dev'))
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
@@ -65,6 +69,8 @@ app.use(errorhandler)
 //globals
 app.use((req,res,next) => {
     app.locals.user = req.user;
+    app.locals.loginwrong = req.flash('loginwrong')
+    app.locals.successlogin = req.flash('successlogin')
     //console.log(req.user)
     next();
 })
