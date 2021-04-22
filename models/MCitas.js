@@ -33,7 +33,7 @@ class MCitas extends ModelBase{
             FROM ${this.tableName} AS C 
             INNER JOIN pacientes AS P 
             ON C.id_Paciente = P.id_Paciente 
-            WHERE C.id_Medico = ${idMedico} AND C.FechaCita = "${this.fechaCita}"`;
+            WHERE C.id_Medico = ${idMedico} AND C.FechaCita = "${this.fechaCita}" AND C.Estado="Pendiente"`;
 
 
             let result = await this.query(sql)
@@ -138,6 +138,16 @@ class MCitas extends ModelBase{
             let paciente = await this.query(`SELECT id_Paciente FROM ${this.tableName} WHERE id_Cita=${id_Cita}`);
 
             return paciente;
+        } catch (error) {
+            if (error) throw error;
+        }
+    }
+
+    async actualizarEstado(Estado,cita){
+        try {
+            let estado = await this.query(`UPDATE ${this.tableName} SET Estado='${Estado}' WHERE id_Cita=${cita}`);
+
+            return estado
         } catch (error) {
             if (error) throw error;
         }

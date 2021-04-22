@@ -1,3 +1,21 @@
+<style>
+
+     .loading {
+        width: 50px;
+        height: 50px;
+        border: 8px solid #d3d3d3;
+        border-top-color: #778899;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        outline: none;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 <div id="wrapper">
     {{>sidebar}}
     <div id="page-wrapper">
@@ -69,6 +87,12 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="submit" id="actualizarCita" class="btn btn-success" value="Guardar">
+                </div>
+                
+            </div>
         </div>
     </div>
 
@@ -104,10 +128,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <input type="submit" id="actualizarCita" class="btn btn-success" value="Guardar">
-    </div>
 </div>
 {{>footer}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
@@ -122,12 +142,15 @@
 
 
     btnActualizarCita.addEventListener('click', function (e) {
-        
+        btnActualizarCita.className = "loading"
+        btnActualizarCita.value = " "
         $.ajax({
             url: `/citas/create/{{cita}}`,
             data: { "detalle":detalle.value, "medicamentos":Medicamentos.value,"duracionTratamiento":duracion.value },
             method: "POST",
             success:function(response){
+                btnActualizarCita.className = "btn btn-success"
+                btnActualizarCita.value = "Guardar"
                 console.log(response)
                 toastr.success(`${response.message}`)    
             },

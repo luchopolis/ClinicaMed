@@ -70,9 +70,9 @@ class TratamientoMedico extends ModelBase {
         }
     }
 
-    async checkTratamiento(idPaciente){
+    async checkTratamiento(){
         try {
-            let sql = `SELECT * FROM ${this.tableName} WHERE id_Paciente=${idPaciente}`
+            let sql = `SELECT * FROM ${this.tableName} WHERE id_Paciente=${this.id_Paciente}`
 
             let consulta = this.query(sql);
 
@@ -82,6 +82,16 @@ class TratamientoMedico extends ModelBase {
         }
     }
 
+    async updateTratamiento(){
+        try {
+           let sql =  `UPDATE ${this.tableName} SET Medicamentos='${this.Medicamentos}',DuracionTratamiento='${this.DuracionTratamiento}' WHERE id_Paciente=${this.id_Paciente}`
+           
+           let result = this.query(sql)
+           return result;
+        } catch (error) {
+            if (error) throw error
+        }
+    }
     
 
     
