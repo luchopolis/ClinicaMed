@@ -13,7 +13,7 @@ module.exports = (router) => {
         
         let citas = await dailyPacientes(id_Medico)
         
-        
+        console.log(req.user)
         res.render('home',{layout:"main",citasDiarias:citas,medico:id_Medico})
     })
 }

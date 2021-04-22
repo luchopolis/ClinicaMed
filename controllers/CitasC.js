@@ -56,7 +56,7 @@ async function getByDate(dateToFind){
         }
         return citasByDate
     } catch (error) {
-        
+        if (error) throw error;
     }
 }
 
@@ -74,7 +74,7 @@ async function getScheduledAppointments(idMedico,month = mm,year = aaaa){
 
         return data;
     } catch (error) {
-        
+        if (error) throw error;
     }
 }
 
@@ -86,9 +86,18 @@ async function newDate(dateObject){
 
         return newDate;
     } catch (error) {
-        
+        if (error) throw error;
+    }
+}
+
+async function getIdPaciente(id_Cita){
+    let Citas = new MCitas()
+    try {
+        return await Citas.getPaciente(id_Cita);
+    } catch (error) {
+        if (error) throw error;
     }
 }
 
 
-module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate}
+module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,getIdPaciente}

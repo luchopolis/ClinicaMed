@@ -42,3 +42,14 @@ hbs.handlebars.registerHelper('checkbloodtype',(blood) => {
 
     
 })
+
+
+hbs.handlebars.registerHelper('isRecepcion',(user) => {
+    if(user.Rol !== "Recepcion"){
+        return false;
+    }else{
+        return true;
+    }
+       
+    
+})

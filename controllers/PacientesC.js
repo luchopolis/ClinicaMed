@@ -46,11 +46,7 @@ async function update(id,pacienteObj){
     try {
         let update = await Paciente.updatePaciente(id,pacienteObj)
        
-        if(update == 1){
-            return true;
-        }
-
-        return false;
+        return update;
     } catch (error) {
         if(error) throw error;
     }

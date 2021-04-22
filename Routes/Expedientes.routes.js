@@ -1,6 +1,8 @@
 const {getPacienteExpediente,getIdExpediente,updateExpediente} = require('../controllers/Expediente.controller')
-const {asignarPadecimientos} = require('../controllers/Padecimientos.controller')
-const {asignarAlergias} = require('../controllers/Alergias.Controller')
+const {asignarPadecimientos,updatePadecimientos} = require('../controllers/Padecimientos.controller')
+const {asignarAlergias,updateAlergias} = require('../controllers/Alergias.Controller')
+
+const {update} = require('../controllers/PacientesC');
 
 
 module.exports = (router) => {
@@ -36,7 +38,7 @@ module.exports = (router) => {
                     }
                    
                 }).catch((error) => {
-                    console.log(error)
+                    next(error)
                 })
 
                
@@ -53,18 +55,45 @@ module.exports = (router) => {
         
         let paciente_id = req.params.idPaciente;
         let data = {...req.body}
+
+        
         try {
             let Expediente = await getIdExpediente(paciente_id)
             let idExpediente = Expediente[0].id_Expediente
+        
             
-            let update = await updateExpediente(idExpediente,data)
-            //aplicar el promise all para actualizar alergias y padecimientos
-            if(update.affectedRows == 1){
-                req.flash('successlogin',`Datos actualizados correctamente`)
-                res.redirect('back');
-            }else{
-                req.flash('loginwrong','Erro en actualizar datos, intente de nuevo')
-            }
+            let padecimientos = await updatePadecimientos(idExpediente,data.padecimientos);
+            let alergias = await updateAlergias(idExpediente,data.alergias);
+            let updateExp = await updateExpediente(idExpediente,data)
+
+            //Update paciente informacion personal
+            let {Nombres,Apellidos,FechaNacimiento,Edad,Direccion,Telefono,TelefonoSecundario,DUI} = data;
+             
+            let pacientePersonalData = await update(paciente_id,{Nombres,Apellidos,FechaNacimiento,Edad,Direccion,Telefono,TelefonoSecundario,DUI});
+
+            Promise.all([updateExp,padecimientos,alergias,pacientePersonalData])
+                .then(data => {
+                    
+                    if(data[0].affectedRows === 1 && data[1].affectedRows === 1 && data[2].affectedRows === 1 && data[3].affectedRows === 1){
+                        req.flash('successlogin',`Datos actualizados correctamente`)
+                        res.redirect('back');
+                       
+                        
+                    }else{
+                        req.flash('loginwrong','Error en actualizar datos, intente de nuevo')
+                        res.redirect('back');
+                    }
+       
+                    
+                }).catch((error) => {
+                    
+                    req.flash('loginwrong','Error en actualizar datos, intente de nuevo')
+                    res.redirect('back');
+                    next(error)
+                    
+                })
+
+           
 
         } catch (error) {
             next(error)

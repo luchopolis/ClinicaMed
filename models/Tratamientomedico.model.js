@@ -5,7 +5,8 @@ const {promisifyQuery,getUpdateRow}= require('../utils/utils')
 const ModelBase = require('./ModelBase')
 
 class TratamientoMedico extends ModelBase {
-
+    Medicamentos = []
+    DuracionTratamiento = 0;
     
     constructor(idPaciente){
         super('tratamientomedico','id_TratamientoMedico');
@@ -14,6 +15,20 @@ class TratamientoMedico extends ModelBase {
         this.id_Paciente = idPaciente;
     }
 
+    get Medicamentos(){
+        return this.Medicamentos;
+    }
+    set Medicamentos(data){
+        this.Medicamentos = data 
+    }
+
+    get DuracionTratamiento(){
+        return this.DuracionTratamiento;
+    }
+    set DuracionTratamiento(data){
+        this.DuracionTratamiento = data 
+    }
+    
     async getActualMedicalTreatment(){
         try {
             let result;
@@ -41,6 +56,33 @@ class TratamientoMedico extends ModelBase {
            
         }
     }
+
+    async nuevoTratamiento(id_Diagnostico){
+        try {
+            let sql = `INSERT INTO ${this.tableName} (id_Diagnostico,Medicamentos,DuracionTratamiento,id_Paciente) VALUES (?,?,?,?)`
+            
+
+            let create = this.query(sql,[id_Diagnostico,this.Medicamentos,this.DuracionTratamiento,this.id_Paciente]);
+
+            return create;
+        } catch (error) {
+            if (error) throw error
+        }
+    }
+
+    async checkTratamiento(idPaciente){
+        try {
+            let sql = `SELECT * FROM ${this.tableName} WHERE id_Paciente=${idPaciente}`
+
+            let consulta = this.query(sql);
+
+            return consulta
+        } catch (error) {
+            if (error) throw error
+        }
+    }
+
+    
 
     
 }

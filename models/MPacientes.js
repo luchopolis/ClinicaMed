@@ -44,9 +44,10 @@ class MPacientes {
         try {
             
             let sql = getUpdateRow(this.idColum,id,updateFields,this.tablename)
+            
             let update = await this.query(sql)
 
-            return update.affectedRows
+            return update
 
         } catch (error) {
             if (error) throw error

@@ -277,7 +277,7 @@
                                                     </div>
                                                 </div>
                                             </div> --}}
-                                            
+
                                             <!-- INFORMACION DEL EXPEDIENTE-->
                                             <div class="tab-pane fade" id="personal" role="tabpanel"
                                                 aria-labelledby="personal-tab" style="margin-top: 10px;">
@@ -285,33 +285,35 @@
                                                 <div class="row">
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
-                                                            <h5>Informacion del paciente</h5>
+                                                            <h5>Informacion del expediente del paciente</h5>
                                                         </div>
                                                         <div class="panel-body">
                                                             <div class="row">
                                                                 <div class="col-lg-6">
                                                                     <label for="">Tipo de sangre</label>
-                                                                    <select name="tipoSangre" id="tipoSangre" class="form-control">
+                                                                    <select name="tipoSangre" id="tipoSangre"
+                                                                        class="form-control">
                                                                         {{#if gruposSanguineos}}
-                                                                            
-                                                                           {{setToCheck tipoSangre}}
-                                                                           {{#each gruposSanguineos}}
-                                                                                {{#if (checkbloodtype this.Nombre)}}
-                                                                                    <option value="{{this.id_TipoSangre}}" selected style="color: red;">{{this.Nombre}}</option>
-                                                                                    {{else}}
-                                                                                    <option value="{{this.id_TipoSangre}}">{{this.Nombre}}</option>
-                                                                                {{/if}}
-                                                                           {{/each}}
-                                                                            
+
+                                                                        {{setToCheck tipoSangre}}
+                                                                        {{#each gruposSanguineos}}
+                                                                        {{#if (checkbloodtype this.Nombre)}}
+                                                                        <option value="{{this.id_TipoSangre}}" selected
+                                                                            style="color: red;">{{this.Nombre}}</option>
+                                                                        {{else}}
+                                                                        <option value="{{this.id_TipoSangre}}">
+                                                                            {{this.Nombre}}</option>
+                                                                        {{/if}}
+                                                                        {{/each}}
+
                                                                         {{/if}}
                                                                     </select>
-                                                                    
+
                                                                 </div>
                                                                 <div class="col-lg-6">
                                                                     <label for="">Peso (lbs)</label>
-                                                                    <input type="text" id="peso"
-                                                                        class="form-control" name="peso"
-                                                                        placeholder="peso (lbs)"
+                                                                    <input type="text" id="peso" class="form-control"
+                                                                        name="peso" placeholder="peso (lbs)"
                                                                         value="{{paciente.Peso}}">
                                                                 </div>
                                                             </div>
@@ -320,12 +322,81 @@
                                                                     <label for="">Ocupación</label>
                                                                     <input type="text" class="form-control"
                                                                         id="ocupacion" name="ocupacion"
-                                                                        placeholder="Ocupación" value="{{paciente.Ocupacion}}">
+                                                                        placeholder="Ocupación"
+                                                                        value="{{paciente.Ocupacion}}">
                                                                 </div>
-                                                                
+
                                                             </div>
-                                                            
-                                                            
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h5>Información personal </h5>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Nombres del paciente</label>
+                                                                    <input type="text" class="form-control" id="nombres"
+                                                                        name="Nombres" placeholder="Nombres"
+                                                                        value="{{pacienteProfile.Nombres}}">
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Apellidos del paciente</label>
+                                                                    <input type="text" id="Apellidos"
+                                                                        class="form-control" name="Apellidos"
+                                                                        placeholder="Apellidos"
+                                                                        value="{{pacienteProfile.Apellidos}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Fecha de Nacimiento </label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="FechaNacimiento" name="FechaNacimiento"
+                                                                        placeholder="Fecha de Nacimiento" value="{{pacienteProfile.FechaNacimiento}}">
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Edad</label>
+                                                                    <input type="text" id="Edad" name="Edad"
+                                                                        placeholder="Edad" class="form-control" value="{{pacienteProfile.Edad}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-12">
+                                                                    <label for="">Dirección</label>
+                                                                    <input type="text" id="Direccion" name="Direccion"
+                                                                        placeholder="Direccion" class="form-control" value="{{pacienteProfile.Direccion}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Telefono</label>
+                                                                    <input type="text" id="Telefono" name="Telefono"
+                                                                        placeholder="Telefono" class="form-control" value="{{pacienteProfile.Telefono}}">
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <label for="">Telefono secundario</label>
+                                                                    <input type="text" id="TelefonoSecundario"
+                                                                        name="TelefonoSecundario" placeholder="Telefono"
+                                                                        class="form-control" value="{{pacienteProfile.TelefonoSecundario}}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="margin-top: 2%;">
+                                                                <div class="col-lg-6">
+                                                                    <label for="">DUI</label>
+                                                                    <input type="text" id="DUI" name="DUI"
+                                                                        placeholder="DUI" class="form-control" value="{{pacienteProfile.DUI}}">
+                                                                </div>
+                                                            </div>
+
+
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -396,13 +467,15 @@
 </div>
 </div>
 {{>footer}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous"></script>
 <script>
-    {{#if successlogin}}
+    {{#if successlogin }}
         toastr.success('{{ successlogin }}')
     {{/if}}
 
-    {{#if loginwrong}}
+    {{#if loginwrong }}
         toastr.success('{{ loginwrong }}')
     {{/if}}
 </script>

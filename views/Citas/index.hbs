@@ -1,0 +1,142 @@
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6">
+                        <h1 class="page-header">Administrar cita</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    Diagnóstico
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="col-lg-12">
+                                <label for="">Establecer el diagnostico de la cita</label>
+                                <textarea name="diagnostico" id="diagnostico" class="form-control" cols="30"
+                                    rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    Tratamiento Médico
+                                </div>
+                                <div class="col-xs-3 text-right">
+                                    <button class="btn btn-primary" data-toggle="modal" href="#tratamientoModal">Editar
+                                        tratamiento médico</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Medicamentos</th>
+                                            <th>Duración del tratamiento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#if medicamentos}}
+                                        <tr>
+                                            <td>{{medicaments medicamentos}}</td>
+                                            <td>{{tratamientoDuracion}}</td>
+                                        </tr>
+                                        {{/if}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tratamientoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span>
+
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Tratamiento del paciente</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="">Medicamentos</label>
+                            <textarea type="text" class="form-control" id="Medicamentos" name="Medicamentos"
+                                placeholder="Medicamento1,Medicamento2">{{medicaments medicamentos}}</textarea>
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="">Tiempo de duración (dias o meses)</label>
+                            <input type="text" class="form-control" id="duracion" name="duracion"
+                                placeholder="Duracion del tratamiento " value="{{tratamientoDuracion}}">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="submit" id="actualizarCita" class="btn btn-success" value="Guardar">
+    </div>
+</div>
+{{>footer}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous"></script>
+<script>
+    let btnActualizarCita = document.querySelector('#actualizarCita')
+    let detalle = document.querySelector('#diagnostico')
+    let Medicamentos = document.querySelector('#Medicamentos')
+    let duracion = document.querySelector('#duracion')
+
+
+
+    btnActualizarCita.addEventListener('click', function (e) {
+        
+        $.ajax({
+            url: `/citas/create/{{cita}}`,
+            data: { "detalle":detalle.value, "medicamentos":Medicamentos.value,"duracionTratamiento":duracion.value },
+            method: "POST",
+            success:function(response){
+                console.log(response)
+                toastr.success(`${response.message}`)    
+            },
+            error:function(error){
+                toastr.error(`${error}`)   
+            }
+        })
+    })
+
+
+
+</script>

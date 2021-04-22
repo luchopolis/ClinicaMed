@@ -5,11 +5,11 @@ const {gruposSanguineos} = require('../controllers/GrupoSanguineoC');
 
 //middlleware auth token
 const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
-const { isLoggedIn } = require('../middlewares/auth/authLogin')
+const { isLoggedIn,isRecepcion} = require('../middlewares/auth/authLogin')
 
 module.exports = (router) => {
 
-    router.get('/pacientes',isLoggedIn,async (req,res,next) => {
+    router.get('/pacientes',isLoggedIn,isRecepcion,async (req,res,next) => {
         try {
             let data = await pacientes()
             //res.status(200).json(data)
@@ -89,9 +89,35 @@ module.exports = (router) => {
             let duracionTratamiento = pacienteTreatment.DuracionTratamiento
             let MedicamentsList = JSON.parse(pacienteTreatment.Medicamentos)
             let GruposSanguineos = await gruposSanguineos();
+
+            let paciente = await getPaciente(id)
+            dateN = new Date(paciente[0].FechaNacimiento);
             
+            //Format
+            let year = dateN.getFullYear()
+            let month = dateN.getMonth()
+            let day = dateN.getDay()
+
+            if (month < 10){
+                month = '0' + month;
+            }
+            if (day  < 10){
+                day = '0' + day;
+            }
             
-            res.render('../views/Pacientes/Paciente',{layout:"main",id_paciente:id,paciente:expediente[0],tipoSangre:expediente[0].Tipo_Sangre,pacienteCitas:appointmentsRecords,tratamientoDuracion:duracionTratamiento,medicamentos:MedicamentsList,gruposSanguineos:GruposSanguineos})
+            paciente[0].FechaNacimiento = [year,month,day].join('-');
+
+            
+            res.render('../views/Pacientes/Paciente',{layout:"main",
+                id_paciente:id,
+                paciente:expediente[0],                     /*Informacion del expediente */
+                tipoSangre:expediente[0].Tipo_Sangre,
+                pacienteCitas:appointmentsRecords,
+                tratamientoDuracion:duracionTratamiento,
+                medicamentos:MedicamentsList,
+                gruposSanguineos:GruposSanguineos,
+                pacienteProfile:paciente[0]                        /*Informacion del paciente la personal */
+            })
             
            
         } catch (error) {

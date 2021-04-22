@@ -37,6 +37,21 @@ class AlergiasModel extends ModelBase {
             if (error) throw error
         }
     }
+
+    async updateAlergias(){
+
+        try {
+            //Use the id Expediente to update
+            let sql = `UPDATE ${this.tableName} SET Alergias='${this._alergias}' WHERE id_Expediente=${this._idExpediente}`
+        
+            let update = await this.query(sql);
+            
+            return update;
+
+        } catch (error) {
+            if (error) throw error
+        }
+    }
 }
 
 module.exports = AlergiasModel

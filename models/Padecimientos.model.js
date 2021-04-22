@@ -38,6 +38,24 @@ class PadecimientosModel extends ModelBase {
         }
     }
 
+    async updatePadecimientos(){
+
+        
+
+        try {
+            //Use the id Expediente to update
+            let sql = `UPDATE ${this.tableName} SET Padecimientos='${this._Padecimientos}' WHERE id_Expediente=${this._idExpediente}`
+        
+            let update = await this.query(sql);
+            
+
+            return update;
+
+        } catch (error) {
+            if (error) throw error
+        }
+    }
+
     
 }
 

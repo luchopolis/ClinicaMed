@@ -16,7 +16,7 @@ module.exports = (router) => {
 
     router.get('/logout',(req,res,next) => {
         req.logOut();
-        res.render('<h3>CERRO SESSION WACHO</h3>')
+        //res.render('<h3>CERRO SESSION WACHO</h3>')
         res.redirect('/login')
     })
 }

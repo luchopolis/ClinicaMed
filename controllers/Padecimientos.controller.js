@@ -13,4 +13,17 @@ async function asignarPadecimientos(id_Expediente,padecimientos){
     }
 }
 
-module.exports = {asignarPadecimientos}
+async function updatePadecimientos(id_Expediente,padecimientos){
+    try {
+        let idExpediente = id_Expediente;
+        let Padecimientos = new PadecimientosModel();
+        Padecimientos._idExpediente = idExpediente;
+        Padecimientos._Padecimientos = padecimientos.split(',');
+        return await Padecimientos.updatePadecimientos()
+
+    } catch (error) {
+        if (error) throw error;
+    }
+}
+
+module.exports = {asignarPadecimientos,updatePadecimientos}

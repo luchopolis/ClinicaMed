@@ -76,7 +76,7 @@
                                                 </td>
                                                 <td>{{this.Apellidos}}</td>
                                                 <td>{{this.Hora}}</td>
-                                                <td><a href="#" style="font-size: 18px;text-decoration:none"><i class="fa fa-pencil-square"></i> Atender cita</a> </td>
+                                                <td><a href="/citas/asignar/{{this.id_Cita}}" style="font-size: 18px;text-decoration:none"><i class="fa fa-pencil-square"></i> Atender cita</a> </td>
                                             </tr>
 
 
@@ -136,7 +136,9 @@
                                                     {{#if citasDiarias}}
                                                     {{#each citasDiarias}}
                                                     <tr>
-                                                        <td>{{this.Nombres}}</td>
+                                                        <td><a
+                                                                href="/pacientes/expediente/{{this.id_Paciente}}">{{this.Nombres}}</a>
+                                                        </td>
                                                         <td>{{this.Apellidos}}</td>
                                                         <td>{{this.Hora}}</td>
                                                     </tr>
@@ -187,6 +189,10 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="col-lg-12">
+                    <h2 class="page-header">Horario actual</h2>
                 </div>
 
 
