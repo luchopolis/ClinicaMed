@@ -29,7 +29,7 @@ class MCitas extends ModelBase{
             //todo esto usando el id del medico para que solo muestre los pacientes por X medico
             //y que sean los pacientes del dia.
 
-            let sql = `SELECT C.id_Cita,P.id_Paciente,P.Nombres,P.Apellidos,C.Hora,C.FechaCita
+            let sql = `SELECT C.id_Cita,C.Estado,P.id_Paciente,P.Nombres,P.Apellidos,C.Hora,C.FechaCita
             FROM ${this.tableName} AS C 
             INNER JOIN pacientes AS P 
             ON C.id_Paciente = P.id_Paciente 
@@ -150,6 +150,15 @@ class MCitas extends ModelBase{
             return estado
         } catch (error) {
             if (error) throw error;
+        }
+    }
+
+    async getAppointmentsPending(date){
+        try {
+            let citas = await this.query(`SELECT * FROM ${this.tableName} WHERE Estado="Pendiente" AND FechaCita="${date}"`)
+            return citas;
+        } catch (error) {
+            if (error) throw error; 
         }
     }
 }

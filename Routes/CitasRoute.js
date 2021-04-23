@@ -76,7 +76,7 @@ module.exports = (router) => {
            
             for(let i = 0;i < citasAgendadas.length;i++){
                 
-                let {FechaCita,Hora} = citasAgendadas[i]
+                let {FechaCita,Hora,Estado} = citasAgendadas[i]
                 let fechaFormated = JSON.stringify(FechaCita).slice(1,10)
                 let paciente = citasAgendadas[i]["id_Paciente"]
                 let pacienteController = await getPaciente(paciente)
@@ -84,7 +84,8 @@ module.exports = (router) => {
                 cita = {
                     fechaFormated,
                     Hora,
-                    paciente:pacienteController
+                    paciente:pacienteController,
+                    Estado
                 }
                 
                 listaPacientes.push(cita)

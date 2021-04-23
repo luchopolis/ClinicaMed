@@ -15,12 +15,33 @@ require('./web/login.routes')(router)
 require('./web/home.routes')(router)
 require('./web/citas.routes')(router)
 
+//Para verificar si las citas vencieron
+let {citasToClose} = require('../controllers/CitasC')
+
+async function checkCitas(){
+    
+    await citasToClose()
+     
+   
+}
+
 let initApiRoutes = (app) => {
+    
+    setInterval(() => {
+        app.locals.checkCitas = "Estado de citas actualizados"
+        checkCitas()
+    }, 10000);
+    
+    
+    app.get('/',function(req,res,next){
+        
+        res.redirect('/login')
+    })
     
     app.use('/',router);
    
 }
 
-module.exports = {initApiRoutes};
+module.exports = {initApiRoutes,checkCitas};
 
 

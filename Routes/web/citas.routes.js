@@ -1,4 +1,4 @@
-const { getIdPaciente } = require('../../controllers/CitasC')
+const { getIdPaciente,updateEstado } = require('../../controllers/CitasC')
 const { pacienteTratamiento, nuevoTratamiento, existTratamiento,updateTratamientoByPacienteId } = require('../../controllers/TratamientoMedico.Controller')
 const { nuevoDiagnostico } = require('../../controllers/Diagnostico.Controller')
 
@@ -47,8 +47,11 @@ module.exports = (router) => {
 
 
                 if (tratamiento.affectedRows === 1) {
+                    let estadoUpdate = await updateEstado(req.params.idCita,"Completado")
                     res.status(200).json({
-                        message: "Datos creados correctamente"
+                        message: "Datos creados correctamente",
+                        messageEstado:estadoUpdate.message,
+                        estado:estadoUpdate.Estado
                     })
                 } else {
                     res.status(400).json({
@@ -63,11 +66,15 @@ module.exports = (router) => {
         } else {
             let diagnostico = await nuevoDiagnostico(req.params.idCita, detalle)
             if (diagnostico.affectedRows === 1) {
+                let estadoUpdate = await updateEstado(req.params.idCita,"Completado")
+                
                 //Actualizar el tratamiento
                 let updateTratamiento = await updateTratamientoByPacienteId(idPaciente,medicamentos,duracionTratamiento)
                 if(updateTratamiento){
                     res.status(200).json({
-                        message: "Tratamiento actualizado"
+                        message: "Tratamiento actualizado",
+                        messageEstado:estadoUpdate.message,
+                        estado:estadoUpdate.Estado
                     })
                 }else{
                     res.status(200).json({

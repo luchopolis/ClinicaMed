@@ -7,7 +7,8 @@ let dd = date.getDate();
 let mm = date.getMonth()+1;
 let aaaa = date.getFullYear()
 
-let actualDay = `${aaaa}-${03}-${23}`;
+
+let actualDay = `${aaaa}-${mm}-${dd}`;
 //Mostrar los pacientes diarios a un medico en especifico
 async function dailyPacientes(idMedico){
     
@@ -99,5 +100,53 @@ async function getIdPaciente(id_Cita){
     }
 }
 
+async function updateEstado(idCita,Estado){
+    let Citas = new MCitas();
+    try {
+        let update = await Citas.actualizarEstado(Estado,idCita);
+        if(update.affectedRows === 1){
+            return {
+                message:"Estado actualizado",
+                estado:Estado
+            }
+        }else{
+            return {
+                message:"Sin cambios",
+                estado:"Sin cambios"
+            };
+        }
+       
+    } catch (error) {
+        if (error) throw error;
+    }
+}
 
-module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,getIdPaciente}
+async function citasToClose(){
+    let Citas = new MCitas();
+    //Es necesario cambiar y agregar en configuraciones este dato
+    let limitTime = '23:33'
+    
+    let dateCita = new Date()
+    let horas = dateCita.getHours()
+    let minutes = dateCita.getMinutes()
+    try {
+        let citasPendientes = await Citas.getAppointmentsPending(actualDay)
+        let time = `${horas}:${minutes}`
+
+        if(time === limitTime){
+            citasPendientes.forEach(async (cita) => {
+                await updateEstado(cita.id_Cita,"Completado")
+                console.log("Estados actualizados" + cita.Estado)
+                
+            })
+        }
+        
+        
+
+    } catch (error) {
+        if (error) throw error
+    }
+}
+
+
+module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,getIdPaciente,updateEstado,citasToClose}

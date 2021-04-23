@@ -64,6 +64,7 @@ app.use(express.json())
 //erro handle
 app.use(errorhandler)
 
+const {initApiRoutes,checkCitas} = require('./Routes/initRoutes')
 
 
 //globals
@@ -71,16 +72,19 @@ app.use((req,res,next) => {
     app.locals.user = req.user;
     app.locals.loginwrong = req.flash('loginwrong')
     app.locals.successlogin = req.flash('successlogin')
+
+  
     //console.log(req.user)
     next();
 })
+
 
 app.use('/private', express.static(path.join(__dirname, 'scripts')));
 app.use(express.static('public'))
 
 
 //CALL API ROUTES
-const {initApiRoutes} = require('./Routes/initRoutes')
+
 initApiRoutes(app)
 //CAL WEB ROUTES
 
