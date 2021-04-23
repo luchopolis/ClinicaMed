@@ -151,8 +151,11 @@
             success:function(response){
                 btnActualizarCita.className = "btn btn-success"
                 btnActualizarCita.value = "Guardar"
-                console.log(response)
-                toastr.success(`${response.message}`)    
+                
+                toastr.success(`${response.message}`)
+                toastr.info(`${response.messageEstado}`)
+      
+               
             },
             error:function(error){
                 toastr.error(`${error}`)   

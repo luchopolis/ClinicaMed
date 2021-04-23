@@ -175,6 +175,7 @@
                                                         <th>Apellidos</th>
                                                         <th>Fecha</th>
                                                         <th>Hora asignada</th>
+                                                        <th>Estado</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="secondFilterTableBody">
@@ -307,6 +308,7 @@
                                                         <td>${cita.paciente[0].Apellidos}</td>
                                                         <td>${cita.fechaFormated}</td>
                                                         <td>${cita.Hora}</td>
+                                                        <td>${cita.Estado}</td>
                                                     </tr>`
                         })
                     }
@@ -316,5 +318,11 @@
 </script>
 
 <script src="/private/test.js">
-
+    
+    
+</script>
+<script>
+    {{#if checkCitas}}
+        toastr.warning(`{{checkCitas}}`)
+    {{/if}}
 </script>
