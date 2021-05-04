@@ -28,6 +28,19 @@ class UsuarioModel extends ModelBase{
             if(error) throw error;
         }
     }
+
+    async createUser(user){
+        let {username,password,rol,permisos} = user;
+        
+        try {
+            let sql = `INSERT INTO ${this.tableName} (Username,Password,Rol,Permisos) VALUES ("${username}","${password}","${rol}","${permisos}")`;
+            let newUser = await this.query(sql)
+
+            return newUser;
+        } catch (error) {
+            if(error) throw error;
+        }
+    }
 }
 
 module.exports = UsuarioModel

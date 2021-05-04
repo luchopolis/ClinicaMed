@@ -16,7 +16,7 @@ module.exports = (router) => {
         let alergias = data.alergias
     
         try {
-            
+            //Crea un expediente, y retorna el id del expediente creado
             let create = await getPacienteExpediente(idPaciente,data);
 
             if(create.affectedRows === 1){
@@ -31,7 +31,7 @@ module.exports = (router) => {
                         res.status(200).json({"message":"Expediente creado"})
                     }else if(!data[0].affectedRows){
                         res.status(400).json({"message":"Error en crear padecimientos"})
-
+                        
                         //Quizas luego hay que borrar el registro de expediente ya que no se completó padecimientos
                     }else if(!data[1].affectedRows){
                         res.status(400).json({"message":"Error en crear alergias"})

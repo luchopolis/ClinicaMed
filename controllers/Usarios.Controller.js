@@ -5,9 +5,9 @@ const helpers = require('../utils/encryptPassword');
 async function checkUser(user,password) {
     try {
         
-        let newUser = new UsuarioModel()
+        let foundUser = new UsuarioModel()
         //let hashPassword = await helpers.encryptPassword(password)
-        let userT = await newUser.foundUserByName(user)
+        let userT = await foundUser.foundUserByName(user)
         
         if(userT.length == 0){
             return false;
@@ -26,8 +26,23 @@ async function checkUser(user,password) {
     }
 }
 
-async function createUser(user,password,rol,permisos){
+async function createUser(user){
+    
+    try {
+        let newUser = new UsuarioModel()
+        let createdUser = await newUser.createUser(user)
 
+        
+        if(createdUser.affectedRows === 1){
+            //usuario creado correctamente
+            return true
+        }else{
+            return false
+        }
+        
+    } catch (error) {
+        if (error) throw error;
+    }
 }
 
-module.exports = {checkUser}
+module.exports = {checkUser,createUser}

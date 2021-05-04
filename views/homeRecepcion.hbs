@@ -1,0 +1,84 @@
+<div id="wrapper">
+    {{> sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Control de recepcion</h2>
+                </div>
+                {{!-- {{#if user}}
+                <h4>Hola {{ user.Username }}</h4>
+                {{/if}} --}}
+                <!-- row -->
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-users fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        {{#if pacientesDiarios}}
+                                            <div class="huge">{{ pacientesDiarios.length }}</div>
+                                        {{else}}
+                                            <div class="hug" style="font-size: 24px;">0</div>
+                                        {{/if}}
+                                        <div>Pacientes para este día</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{> footer}}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous"></script>
+{{!--
+<script type="application/javascript">
+    { {#if(Rol user.Rol) } }
+    toastr.success('Bienvenido Doctor {{ user.Username }}')
+    { {else } }
+    toastr.success('Bienvenido {{ user.Username }}')
+    {
+        {
+            /if}}
+</script> --}}
+
+<script async type="text/javascript">
+
+            $(document).ready(function () {
+              
+
+
+                {{#if successlogin}}
+                    toastr.success('{{successlogin}}')
+                {{/if}}
+                
+   
+            })
+</script>
+
+<script src="/private/test.js">
+    
+    
+</script>
+<script>
+    {{#if checkCitas}}
+        toastr.warning(`{{checkCitas}}`)
+    {{/if}}
+</script>

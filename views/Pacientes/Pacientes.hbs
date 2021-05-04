@@ -35,36 +35,19 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Listado de pacientes
+                        <div class="row">
+                            <div class="col-lg-10" style="font-size: 20px;  vertical-align: middle;">
+                                <div>
+                                    <p>Listado de pacientes</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 right"><button class="btn btn-primary" id="btnNuevoPaciente" style="font-size: 18px" >Crear Paciente</button></div>
+                        </div>
                     </div>
                     <div class="panel-body">
-                        {{#if pacientes}}
-                            <table id="example" class="display" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>Edad</th>
-                                        <th>Telefono</th>
-                                        <th>Telefono 2</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                        {{#each pacientes}}
-                              <tr>
-                                  <td>{{this.Nombres}}</td>
-                                  <td>{{this.Apellidos}}</td>
-                                  <td>{{this.Edad}}</td>
-                                  <td>{{this.Telefono}}</td>
-                                  <td>{{this.TelefonoSecundario}}</td>
-                              </tr>  
-
-                                
-                            
-                        {{/each}}
-                        {{else}}
-                        {{/if}}
-                        </tbody>
+                      
+                        <table id="example" class="display" style="width:100%; font-size:17px;">
+                           
                         </table>
                     </div>
                 </div>
@@ -73,6 +56,7 @@
 
     </div>
     <!-- /.container-fluid -->
+
 </div>
 </div>
 
@@ -87,6 +71,36 @@
 
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        let nuevoPacienteBtn = document.getElementById("btnNuevoPaciente");
+
+        nuevoPacienteBtn.addEventListener('click',() => {
+            window.location.href = "/paciente/nuevo/"
+        })
+     
+        let pacientes = "{{pacientes}}"
+        let pacientesData = JSON.parse(pacientes.replace(/&quot;/g,'"'))
+ 
+        $('#example').DataTable(
+            {
+                "data":pacientesData,
+                "ordering":false,
+                "columns":[
+                    {"title":"Nombres"},
+                    {"title":"Apellidos"},
+                    {"title":"Edad"},
+                    {"title":"Telefono"},
+                    {"title":"Telefono 2"},
+                    {"title":"--- ---"}
+                    
+                ],
+                "columnDefs":[{
+                    "targets":5,
+                    "render": function(data,type,full,meta){
+                        
+                        return `<a href="/pacientes/expediente/${data}"><i class="fa fa-address-card" style="font-size:30px;"></i></a>`
+                    }
+                }]
+            }
+        );
     } );
 </script>

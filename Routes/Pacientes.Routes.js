@@ -12,8 +12,17 @@ module.exports = (router) => {
     router.get('/pacientes',isLoggedIn,isRecepcion,async (req,res,next) => {
         try {
             let data = await pacientes()
+
+            let pacientest = []
+
+            data.forEach(element => {
+                let { Nombres,Apellidos,Edad,Telefono,TelefonoSecundario,id_Paciente} = element
+                pacientest.push([Nombres,Apellidos,Edad,Telefono,TelefonoSecundario,id_Paciente])
+            });
+            
+      
             //res.status(200).json(data)
-            res.render('../views/Pacientes/Pacientes',{layout:"main",pacientes:data,total:data.length})
+            res.render('../views/Pacientes/Pacientes',{layout:"main",pacientes:JSON.stringify(pacientest),total:data.length})
         } catch (error) {
            next(error)
         }
@@ -26,11 +35,13 @@ module.exports = (router) => {
            
             let pacienteObj = {...req.body}
 
+            
             let result = await create(pacienteObj)
 
   
             if(result.affectedRows === 1){
-                res.status(200).json({"message":"Registro creado"})
+                
+                res.status(200).json({"message":"Registro creado","id":result.insertId})
             }else{
                 res.status(204).json({"message":"Problema en crear el registro"})
             }
