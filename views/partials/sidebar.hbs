@@ -111,6 +111,21 @@
                         <a href="/pacientes"><i class="fa fa-users fa-fw"></i> Pacientes</a>
                     </li>
                 {{/if}}
+                 {{#if (isRecepcion user)}}
+                    <li>
+                        <a href="#"><i class="fa fa-calendar fa-fw"></i> Citas <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/citas/nueva">Nueva Cita</a>
+                            </li>
+                            <li>
+                                <a href="buttons.html">Registro de citas</a>
+                            </li>
+
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                {{/if}}
                 <li>
                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">

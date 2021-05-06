@@ -113,6 +113,7 @@ module.exports = (router) => {
 
             let dateObject = {...req.body}
 
+           
             let date = await newDate(dateObject)
            
             if(date.affectedRows === 1){

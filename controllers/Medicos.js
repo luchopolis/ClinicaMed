@@ -1,14 +1,15 @@
 const MMedicos = require('../models/MMedicos')
-const MMedicos = require('../models/MMedicos');
+
 
 
 async function medicos(){
-    let Medicos = new MMedicos()
-
+   
+    
     try {
-        let medicos =  await Medicos.getMedicos()
-        
-        return medicos;
+        let Medicos = new MMedicos()
+        let medicosList =  await Medicos.getMedicos()
+    
+        return medicosList;
     } catch (error) {
         if(error) throw error
     }
@@ -69,3 +70,5 @@ async function getMedico(id){
         if(error) throw error;
     }
 }
+
+module.exports = { medicos }

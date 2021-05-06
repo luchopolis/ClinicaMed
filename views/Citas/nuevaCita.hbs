@@ -1,0 +1,115 @@
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6">
+                        <h1 class="page-header">Crear nueva cita</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    Ajuste de la cita
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                        <form action="" id="citaFormulario" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="FechaCita">Fecha de la cita</label>
+                                    <input type="date" class="form-control" id="FechaCita" name="FechaCita">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="Hora">Hora de la cita</label>
+                                    <input type="time" class="form-control" id="Hora" name="Hora">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="Pacientes">Paciente</label>
+                                    <select name="Pacientes" id="Pacientes" class="form-control">
+                                        {{#if Pacientes}}
+                                        {{#each Pacientes}}
+                                        
+                                        <option value="{{this.id_Paciente}}">
+                                            {{this.Nombres}} {{this.Apellidos}}</option>
+                                      
+                                        {{/each}}
+
+                                        {{/if}}
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="Medico">Medico</label>
+                                    <select name="Medicos" id="Medicos" class="form-control">
+                                            {{#if Medicos}}
+                                            {{#each Medicos}}
+                                            
+                                            <option value="{{this.id_Medico}}">
+                                                {{this.Nombres}} {{this.Apellidos}}</option>
+                                        
+                                            {{/each}}
+
+                                            {{/if}}
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-success" id="citaNuevaBtn" name="citaNuevaBtn" style="width: 100%; margin-top:20px">Crear cita</button>
+
+                                </div>
+                            </div>
+                        </form>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{{>footer}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        let btnSave = $("#citaNuevaBtn")
+
+       
+        let dataCita = document.getElementById("citaFormulario")
+        let objCita = {}
+
+        btnSave.click(function(e){
+            e.preventDefault()
+            let formToSend = new FormData(dataCita)
+            formToSend.forEach(function(value,key){
+                objCita[key] = value
+            })
+
+            let {FechaCita,Hora,Pacientes,Medicos} = objCita
+
+
+            $.ajax({
+                "url":"/api/appointments",
+                "method":"POST",
+                "data":{FechaCita,Hora,"id_Medico":Medicos,"id_Paciente":Pacientes},
+                success:function(response){
+                    toastr.success(response.message)
+                },
+                error:function(response){
+                    toastr.error(response.message)
+                }
+            })
+        })
+    })
+</script>

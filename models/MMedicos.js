@@ -23,12 +23,13 @@ class MMedicos {
     }
 
     async getMedicos(){
+       
         try {
             let result = await this.query(`SELECT * FROM ${this.tablename}`)
-
+            
             return result
         } catch (error) {
-            
+            if(error) throw error
 
         }
     }
@@ -57,7 +58,7 @@ class MMedicos {
         }
     }
 
-    async getMedicos(id){
+    async getMedicosById(id){
         try {
             let result = await this.query(`SELECT * FROM ${this.tablename} WHERE ${this.idColum}=${id}`)
             
