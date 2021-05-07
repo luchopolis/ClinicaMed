@@ -38,7 +38,7 @@ async function allDailyPacientes(){
         if(citasDiarias.length === 0){
             return []
         }
-
+        
         return citasDiarias;
     } catch (error) {
         if (error) throw error;

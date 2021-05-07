@@ -42,6 +42,17 @@ module.exports = (router) => {
         }
     })
 
+    router.get('/citas/medicos',isLoggedIn,async (req,res,next) => {
+        try {
+            let medicosList = await medicos();
+
+            res.render('../views/Citas/medicos.hbs', {layout: "main", medicos:medicosList});
+        } catch (error) {
+            next(error);
+        }
+        
+    })
+
 
     /* La ruta para crear una nueva cita esta en CitasRoute */
     //Utilizada para actualizar la cita, el medico realiza esta funcion desde su vista

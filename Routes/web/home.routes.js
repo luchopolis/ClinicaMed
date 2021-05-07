@@ -12,7 +12,7 @@ module.exports = (router) => {
             
             let citasRecepcion = await allDailyPacientes();
             
-            res.render('homeRecepcion',{layout:"main",pacientesDiarios:citasRecepcion.length})
+            res.render('homeRecepcion',{layout:"main",pacientesDiarios:citasRecepcion})
 
         }else if(Rol === "Medico"){
             let medico = new usuariosMedicos()

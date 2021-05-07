@@ -1,0 +1,75 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+<div id="wrapper">
+
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6">
+                        <h1 class="page-header">Citas diarias por médico</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    Listado de citas del día por Médico
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <label for="Pacientes">Médico</label>
+                                            <select name="Medicos" id="Medicos" class="form-control" data-live-search="true">
+                                                {{#if medicos}}
+                                                {{#each medicos}}
+                                                
+                                                <option value="{{this.id_Medico}}" data-tokens="{{this.Nombres}}" >
+                                                    {{this.Nombres}} {{this.Apellidos}}</option>
+                                            
+                                                {{/each}}
+
+                                                {{/if}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table id="citasMedico" class="display" style="width:100%; font-size:17px;">
+                                    
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous"></script>
+
+
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#citasMedico').DataTable();
+        $("#Medicos").selectpicker();
+
+        
+        
+    })
+</script>
