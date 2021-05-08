@@ -78,8 +78,8 @@ app.use((req,res,next) => {
     next();
 })
 
-
-app.use('/private', express.static(path.join(__dirname, 'scripts')));
+const { isLoggedIn } = require('./middlewares/auth/authLogin')
+app.use('/private', isLoggedIn,express.static(path.join(__dirname, 'scripts')));
 app.use(express.static('public'))
 
 
