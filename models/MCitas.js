@@ -20,6 +20,19 @@ class MCitas extends ModelBase{
         this.fechaCita = date;
     }
 
+    async getApt(idCita){
+        let sql = `SELECT * FROM ${this.tableName} WHERE ${this.id_Column}='${idCita}'`
+        let data = await this.query(sql)
+
+        return data;
+    }
+    async updateApt(idCita,newData){
+       
+        let sql = `UPDATE ${this.tableName} SET FechaCita='${newData.FechaCita}',Hora='${newData.Hora}',id_Medico=${newData.id_Medico} WHERE ${this.id_Column}='${idCita}'`
+        let updateApt = await this.query(sql)
+       
+        return updateApt;
+    }
     //Retorna la lista de pacientes por dia del medico
     async getPacientesDay(idMedico){
         try {

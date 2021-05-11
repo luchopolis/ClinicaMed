@@ -58,11 +58,6 @@
                                                 aria-selected="true">Citas diarias</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#bydate"
-                                                role="tab" aria-controls="profile" aria-selected="false">Citas por
-                                                fecha</a>
-                                        </li>
-                                        <li class="nav-item">
                                             <a class="nav-link" id="monthApts-tab" data-toggle="tab" href="#monthApts"
                                                 role="tab" aria-controls="monthApts" aria-selected="false">Citas por
                                                 mes</a>
@@ -150,6 +145,8 @@
     let firstDoctor = $('#Medicos').val()
     $(document).ready(function () {
         let table = $('#citasMedico').DataTable();
+        let tableMonth = $('#citasMedicoMonth').DataTable();
+
         $("#Medicos").select2({
             placeholder: 'Medicos'
         });
@@ -177,6 +174,7 @@
             let idMedico = this.value;
 
             table.clear().draw();
+            firstDoctor = this.value
 
             let appointments = await loadCitasMedico(idMedico)
 
@@ -219,6 +217,8 @@
         let inputMonth = $('#monthInput')
         let tableMonth = document.getElementById('tableMonth')
 
+
+
         let citaRegistro;
 
         inputMonth.change(async function (e) {
@@ -226,11 +226,13 @@
             //loader.style.display = "flex";
 
             let { month, year } = returnDate(inputMonth.val())
-
+            
             citaRegistro = new CitasMonth({"id_Medico":firstDoctor,"month":month,"year":year});
             let response = await citaRegistro.getData()
             citaRegistro.renderTable(response,tableMonth)
         })
+
+      
 
         function returnDate(input) {
             let date = new Date(input)

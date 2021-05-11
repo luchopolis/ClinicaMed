@@ -149,4 +149,26 @@ async function citasToClose(){
 }
 
 
-module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,getIdPaciente,updateEstado,citasToClose}
+async function getApts(idApts){
+    let Citas = new MCitas();
+
+    try {
+        let dataCita = await Citas.getApt(idApts)
+        return dataCita
+    } catch (error) {
+        if (error) throw error;
+    }
+}
+
+async function updateApts(idApts,data){
+    let Citas = new MCitas();
+
+    try {
+        let uptd = await Citas.updateApt(idApts,data)
+
+        return uptd;
+    } catch (error) {
+        if (error) throw error;
+    }
+}
+module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,getIdPaciente,updateEstado,citasToClose,getApts,updateApts}

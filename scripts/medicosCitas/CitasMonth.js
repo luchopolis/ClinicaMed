@@ -14,6 +14,7 @@ class CitasMonth{
             $.ajax({
                 url: `/api/appointments/Scheduled/${this.idMedico}/${this.month}/${this.year}`,
                 success: function (response) {
+                    
                     resolve(response)
                     //loader.style.display = "none";
                 },
@@ -34,6 +35,7 @@ class CitasMonth{
                                             <td>${cita.fechaFormated}</td>
                                             <td>${cita.Hora}</td>
                                             <td>${cita.Estado}</td>
+                                            <td><a href='/citas/edit/${cita.id_Cita}'>Editar</a></td>
                                         </tr>`
             })
         }

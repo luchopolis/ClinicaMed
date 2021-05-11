@@ -1,5 +1,5 @@
 
-const {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate} = require(`../controllers/CitasC`)
+const {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,updateApts} = require(`../controllers/CitasC`)
 const {getPaciente} = require('../controllers/PacientesC')
 const isBodyEmpty = require('../middlewares/bodyEmpty')
 
@@ -76,12 +76,13 @@ module.exports = (router) => {
            
             for(let i = 0;i < citasAgendadas.length;i++){
                 
-                let {FechaCita,Hora,Estado} = citasAgendadas[i]
-                let fechaFormated = JSON.stringify(FechaCita).slice(1,10)
+                let {id_Cita,FechaCita,Hora,Estado} = citasAgendadas[i]
+                let fechaFormated = JSON.stringify(FechaCita).slice(1,11)
                 let paciente = citasAgendadas[i]["id_Paciente"]
                 let pacienteController = await getPaciente(paciente)
                 
                 cita = {
+                    id_Cita,
                     fechaFormated,
                     Hora,
                     paciente:pacienteController,
@@ -121,6 +122,23 @@ module.exports = (router) => {
             }else{
                 res.status(204).json({"message":"Problema en crear el registro"})
             }
+
+        } catch (error) {
+            next(error)
+        }
+    })
+
+    router.post('/api/appointments/update/:idApt', async (req,res,next) => {
+        try {
+            let idApt = req.params.idApt
+            let {FechaCita,Hora,id_Medico} = req.body
+            let updateCita = await updateApts(idApt,{FechaCita,Hora,id_Medico})
+            if(updateCita.affectedRows === 1){
+                res.status(200).json({"message":"Cita actualizada"})
+            }else{
+                res.status(204).json({"message":"Problema en actualizar"})
+            }
+
 
         } catch (error) {
             next(error)

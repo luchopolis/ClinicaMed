@@ -1,4 +1,4 @@
-const { getIdPaciente,updateEstado } = require('../../controllers/CitasC')
+const { getIdPaciente,updateEstado,getApts } = require('../../controllers/CitasC')
 const { pacienteTratamiento, nuevoTratamiento, existTratamiento,updateTratamientoByPacienteId } = require('../../controllers/TratamientoMedico.Controller')
 const { nuevoDiagnostico } = require('../../controllers/Diagnostico.Controller')
 
@@ -51,6 +51,22 @@ module.exports = (router) => {
             next(error);
         }
         
+    })
+
+    router.get('/citas/edit/:idCita',async(req,res,next) => {
+        let idCita = req.params.idCita;
+        
+        try {
+            let medicosData = await medicos();
+            let cita = await getApts(idCita)
+            
+            let fechaFormated = JSON.stringify(cita[0].FechaCita).slice(1,11)
+           
+            
+            res.render('../views/Citas/editCita.hbs', {layout: "main", Medicos:medicosData,citaDetail:cita[0],fecha:fechaFormated});
+        } catch (error) {
+            next(error)
+        }
     })
 
 
