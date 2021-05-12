@@ -16,6 +16,7 @@ require('./web/home.routes')(router)
 require('./web/citas.routes')(router)
 require('./web/usuarios.routes')(router)
 require('./web/pacientesWeb.Routes')(router)
+require('./web/empleados.routes')(router)
 //Para verificar si las citas vencieron
 let {citasToClose} = require('../controllers/CitasC')
 
