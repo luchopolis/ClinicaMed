@@ -150,13 +150,17 @@ module.exports = (router) => {
     //Generate route expediente PDF
     router.get('/expediente/generate',(req,res,next) => {
         
-        let {Nombre,TipoSangre} = req.query
+        let {Nombre,TipoSangre,Padecimientos,Alergias} = req.query
         
-        
+        let ListPadecimientos = Padecimientos.split(",")
+        let ListAlergias = Alergias.split(",")
+
         let printer = new pdfMake(fonts);
         let expedientePDF = new pdfExpediente()
         expedientePDF.Nombre = Nombre
         expedientePDF.TipoSangre = TipoSangre
+        expedientePDF.Padecimientos = ListPadecimientos
+        expedientePDF.Alergias = ListAlergias
 
         res.writeHead(200, 
             {
@@ -165,8 +169,16 @@ module.exports = (router) => {
                 
             }
         );
+        
+        let expe = expedientePDF.getExpediente()
+        let stack = expedientePDF.asignarPadecimientos()
+        let stackAlergias = expedientePDF.asignarAlergias()
 
-        let docPdf =  printer.createPdfKitDocument(expedientePDF.getExpediente());
+
+        expe['content'][6]["table"]["body"][1].push(stack)
+        expe['content'][6]["table"]["body"][1].push(stackAlergias)
+        
+        let docPdf =  printer.createPdfKitDocument(expe);
         docPdf.pipe(res)
         docPdf.end()
         

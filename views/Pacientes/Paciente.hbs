@@ -495,14 +495,16 @@
 
     btnGenerate.click(function(e){
         let tipoS = "{{paciente.Tipo_Sangre}}"
+        let Padecimientos = '{{paciente.Padecimientos}}'
+        let Alergias = '{{paciente.Alergias}}'
 
         if(tipoS.includes("+")){
             //URL Encoding 
             let blood = tipoS.replace("+","%2B")
 
-            window.location = `/expediente/generate?Nombre=${nombreCompleto}&TipoSangre=${blood}`
+            window.location = `/expediente/generate?Nombre=${nombreCompleto}&TipoSangre=${blood}&Padecimientos=${Padecimientos}&Alergias=${Alergias}`
         }else{
-             window.location = `/expediente/generate?Nombre=${nombreCompleto}&TipoSangre=${tipoS}`
+             window.location = `/expediente/generate?Nombre=${nombreCompleto}&TipoSangre=${tipoS}&Padecimientos=${Padecimientos}`
         }
         
         
