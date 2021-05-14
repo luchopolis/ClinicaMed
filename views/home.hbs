@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/jquery.schedule.min.css">
 <style>
     .loading {
         width: 50px;
@@ -196,7 +197,11 @@
                     <h2 class="page-header">Horario actual</h2>
                 </div>
 
-
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="schedule-demo"></div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -321,8 +326,19 @@
     
     
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/jquery.schedule.js"></script>
 <script>
     {{#if checkCitas}}
         toastr.warning(`{{checkCitas}}`)
     {{/if}}
+
+    $.ajax({
+        url:`/Horarios/Medico/{{medico}}`,
+        method:"GET",
+        success:function(data){
+            $("#schedule-demo").jqs(data.Jornada);
+            
+        }
+    })
 </script>

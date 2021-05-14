@@ -7,6 +7,16 @@ const {gruposSanguineos} = require('../controllers/GrupoSanguineoC');
 const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
 const { isLoggedIn,isRecepcion} = require('../middlewares/auth/authLogin')
 
+
+const pdfMake = require('pdfmake')
+const pdfFonts = require('pdfmake/build/vfs_fonts')
+var fs = require('fs');
+
+const fonts = require('../utils/loadFonts')
+
+//expedienteModelPdf
+
+const pdfExpediente = require('../utils/pdfExpediente')
 module.exports = (router) => {
 
     router.get('/pacientes',isLoggedIn,isRecepcion,async (req,res,next) => {
@@ -134,6 +144,32 @@ module.exports = (router) => {
         } catch (error) {
             next(error)
         }
+    })
+
+
+    //Generate route expediente PDF
+    router.get('/expediente/generate',(req,res,next) => {
+        
+        let {Nombre,TipoSangre} = req.query
+        
+        
+        let printer = new pdfMake(fonts);
+        let expedientePDF = new pdfExpediente()
+        expedientePDF.Nombre = Nombre
+        expedientePDF.TipoSangre = TipoSangre
+
+        res.writeHead(200, 
+            {
+                'Content-Type':'application/pdf',
+                'Content-Disposition':'attachment;filename="expediente.pdf"'
+                
+            }
+        );
+
+        let docPdf =  printer.createPdfKitDocument(expedientePDF.getExpediente());
+        docPdf.pipe(res)
+        docPdf.end()
+        
     })
 
     

@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/css/jquery.schedule.min.css">
+<div id="schedule-demo"></div>
+
+{{>footer}}
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="/js/jquery.schedule.js"></script>
+<script>
+let d = `{ "mode":"read", "daysList": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ], "data": [
+  {
+    "day": 0,
+    "periods": [
+      ["00:00", "02:00"]
+    ]
+  },
+  {
+    "day": 2,
+    "periods": [
+      {
+        "start": "10:00",
+        "end": "12:00",
+        "title": "A black period",
+        "backgroundColor": "rgba(0, 0, 0, 0.5)",
+        "borderColor":"#000",
+        "textColor": "#fff"
+      }
+    ]
+  }
+] }`
+
+ $(document).ready(function(){
+    $.ajax({
+      'url':'/api/horario/medico/2',
+      'method':"POST",
+      data:{"day":6,"start":"10:00","end":"12:00"},
+      success: function(response){
+        console.log(response)
+        $("#schedule-demo").jqs(response);
+      }
+    })
+  })
+
+</script>

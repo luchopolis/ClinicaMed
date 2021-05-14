@@ -17,8 +17,16 @@
                         <h1 class="page-header">Información del paciente</h1>
                     </div>
                     <div class="col-6" id="div-btnEditarPaciente">
-                        <button id="btnEditarPaciente" class="btn btn-success" data-toggle="modal"
+                        <button id="btnEditarPaciente" class="btn btn-success" style="outline: none;" data-toggle="modal"
                             href="#mi_modal">Editar expediente</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6" id="div-btnEditarPaciente">
+                        <button id="btnGenerarExpediente" class="btn btn-primary" style="outline: none;">Generar Expediente</button>
                     </div>
                 </div>
 
@@ -478,4 +486,26 @@
     {{#if loginwrong }}
         toastr.error('{{ loginwrong }}')
     {{/if}}
+
+    let btnGenerate = $('#btnGenerarExpediente')
+    let Apellidos = $('#Apellidos').val()
+    let nombres = $('#nombres').val();
+
+    let nombreCompleto = nombres+" "+Apellidos
+
+    btnGenerate.click(function(e){
+        let tipoS = "{{paciente.Tipo_Sangre}}"
+
+        if(tipoS.includes("+")){
+            //URL Encoding 
+            let blood = tipoS.replace("+","%2B")
+
+            window.location = `/expediente/generate?Nombre=${nombreCompleto}&TipoSangre=${blood}`
+        }else{
+             window.location = `/expediente/generate?Nombre=${nombreCompleto}&TipoSangre=${tipoS}`
+        }
+        
+        
+       
+    })
 </script>

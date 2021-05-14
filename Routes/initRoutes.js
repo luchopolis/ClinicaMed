@@ -8,6 +8,7 @@ require('./Pacientes.Routes')(router)
 require('./CitasRoute')(router)
 require('./GrupoSanguineoRoute')(router)
 require('./Expedientes.routes')(router)
+require('./HorariosControl.routes')(router)
 require('./auth/auth.routes')(router)
 
 //WEB ROUTES
@@ -17,6 +18,7 @@ require('./web/citas.routes')(router)
 require('./web/usuarios.routes')(router)
 require('./web/pacientesWeb.Routes')(router)
 require('./web/empleados.routes')(router)
+require('./web/Horarios.routes')(router)
 //Para verificar si las citas vencieron
 let {citasToClose} = require('../controllers/CitasC')
 
