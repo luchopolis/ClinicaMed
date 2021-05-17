@@ -171,4 +171,16 @@ async function updateApts(idApts,data){
         if (error) throw error;
     }
 }
-module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,getIdPaciente,updateEstado,citasToClose,getApts,updateApts}
+
+async function lastCita(idPaciente){
+    let Citas = new MCitas();
+
+    try {
+        let cita = await Citas.getTheLastCita(idPaciente)
+
+        return cita[0]
+    } catch (error) {
+        if (error) throw error
+    }
+}   
+module.exports = {dailyPacientes,allDailyPacientes,getByDate,getScheduledAppointments,newDate,getIdPaciente,updateEstado,citasToClose,getApts,updateApts,lastCita}

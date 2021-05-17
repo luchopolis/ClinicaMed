@@ -56,7 +56,7 @@ class ExpedienteModel extends ModelBase{
         
         //Mostrara tanto el expediente como las alergias,padecimientos y tipo de sangre
         try {
-            let sql = `SELECT CONCAT_ws(' ',P.Nombres,P.Apellidos) as NombrePaciente,
+            /*let sql = `SELECT CONCAT_ws(' ',P.Nombres,P.Apellidos) as NombrePaciente,
             P.Edad,PD.Padecimientos,
             A.Alergias,
             Exp.Ocupacion,
@@ -73,12 +73,14 @@ class ExpedienteModel extends ModelBase{
             INNER JOIN alergias as A
             ON Exp.id_Expediente = A.id_Expediente
             WHERE P.id_Paciente = ${this._idPaciente}
-            `
+            `*/
+            let sql = `CALL load_expediente_pacient(${this._idPaciente});`
+            
 
             
             let result = await this.query(sql)
 
-            return result;
+            return result[0];
         } catch (error) {
             
             if (error) throw error

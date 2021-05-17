@@ -7,10 +7,14 @@ const {gruposSanguineos} = require('../controllers/GrupoSanguineoC');
 const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
 const { isLoggedIn,isRecepcion} = require('../middlewares/auth/authLogin')
 
+//citaController
+const {lastCita} = require('../controllers/CitasC')
+//diagnosticoControler
+const {diagnosticoPaciente} = require('../controllers/Diagnostico.Controller')
 
 const pdfMake = require('pdfmake')
-const pdfFonts = require('pdfmake/build/vfs_fonts')
-var fs = require('fs');
+
+
 
 const fonts = require('../utils/loadFonts')
 
@@ -148,19 +152,40 @@ module.exports = (router) => {
 
 
     //Generate route expediente PDF
-    router.get('/expediente/generate',(req,res,next) => {
+    router.get('/expediente/generate',async (req,res,next) => {
         
-        let {Nombre,TipoSangre,Padecimientos,Alergias} = req.query
+        //let {Nombre,TipoSangre,Padecimientos,Alergias,Edad,Ocupacion,Peso} = req.query
         
-        let ListPadecimientos = Padecimientos.split(",")
-        let ListAlergias = Alergias.split(",")
+        let {idPaciente} = req.query
+
+        let expediente = await getPacienteExpediente(idPaciente)
+        let pacienteTreatment = await pacienteTratamiento(idPaciente)
+
+
+        //Get The last Cita to get the diagnostic
+        let citaPaciente = await lastCita(idPaciente)
+        let lastCitaId = citaPaciente.id_Cita
+        //Diagnostico
+        let diagnostico = await diagnosticoPaciente(lastCitaId)
+        
+        
+
+        let Medicamentos = JSON.parse(pacienteTreatment.Medicamentos)
+
+        let ListPadecimientos = expediente[0].Padecimientos.split(",")
+        let ListAlergias = expediente[0].Alergias.split(",")
 
         let printer = new pdfMake(fonts);
         let expedientePDF = new pdfExpediente()
-        expedientePDF.Nombre = Nombre
-        expedientePDF.TipoSangre = TipoSangre
+        expedientePDF.Nombre = expediente[0].NombrePaciente
+        expedientePDF.TipoSangre = expediente[0].Tipo_Sangre
         expedientePDF.Padecimientos = ListPadecimientos
         expedientePDF.Alergias = ListAlergias
+        expedientePDF.Medicamentos = Medicamentos
+        expedientePDF.Edad = expediente[0].Edad
+        expedientePDF.Peso = expediente[0].Peso
+        expedientePDF.Ocupacion = expediente[0].Ocupacion
+        expedientePDF.Diagnostico = (diagnostico) ? diagnostico.Detalle : ""
 
         res.writeHead(200, 
             {
@@ -173,11 +198,13 @@ module.exports = (router) => {
         let expe = expedientePDF.getExpediente()
         let stack = expedientePDF.asignarPadecimientos()
         let stackAlergias = expedientePDF.asignarAlergias()
+        let stackMedicamentos = expedientePDF.asignarMedicamentos()
 
 
-        expe['content'][6]["table"]["body"][1].push(stack)
-        expe['content'][6]["table"]["body"][1].push(stackAlergias)
-        
+        expe['content'][8]["table"]["body"][1].push(stack)
+        expe['content'][8]["table"]["body"][1].push(stackAlergias)
+        expe['content'][10]["table"]["body"][1].push(stackMedicamentos)
+
         let docPdf =  printer.createPdfKitDocument(expe);
         docPdf.pipe(res)
         docPdf.end()

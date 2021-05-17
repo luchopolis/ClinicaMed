@@ -31,6 +31,18 @@ class Diagnosticos extends ModelBase {
             if (error) throw error
         }
     }
+
+    async getDiagnosticoByCitaId(){
+        try {
+            let sql = `SELECT * FROM ${this.tableName} WHERE id_Cita=${this.id_Cita}`
+
+            let result = await this.query(sql)
+            return result;
+        
+        } catch (error) {
+            if (error) throw error
+        }
+    }
     
 }
 

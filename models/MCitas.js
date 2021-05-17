@@ -174,6 +174,18 @@ class MCitas extends ModelBase{
             if (error) throw error; 
         }
     }
+
+    async getTheLastCita(idPaciente){
+        try {
+            let sql = `select * from ${this.tableName} where id_Paciente = ${idPaciente}
+            order by id_Cita desc limit 1
+            `
+
+            return await this.query(sql)
+        } catch (error) {
+            if (error) throw error; 
+        }
+    }
 }
 
 module.exports = MCitas;

@@ -3,8 +3,14 @@ class pdfExpediente {
     TipoSangre;
     Padecimientos;
     Alergias;
+    Edad;
+    Ocupacion;
+    Peso;
+    Medicamentos;
+    Diagnostico;
 
     actualDay;
+
 
     constructor(){
         let date = new Date()
@@ -38,8 +44,18 @@ class pdfExpediente {
         return template;
     }
 
+    asignarMedicamentos(){
+        let template = this.templateBodyItems()
+
+        this.Medicamentos.forEach(medicamento => {
+            template["stack"][0]["ul"].push(`${medicamento.nombre}`)
+        })
+
+        return template;
+    }
     getExpediente(){
         let expediente = {
+            watermark: { text: 'MedCenter', fontSize: 20,color: 'blue', opacity: 0.3, bold: true, italics: false },
             content: [
                 
                 {
@@ -86,6 +102,42 @@ class pdfExpediente {
                             margin: [ 0, 0, 0, 0 ] 
                         }
                     ]
+                }, {
+                    columns:[
+                        {
+                            text:`Edad`,
+                            style:"titleStyle",
+                            margin: [ 0, 10, 0, 0 ] 
+                        },
+                        {
+                            text:`Ocupacion`,
+                            style:"titleStyle",
+                            margin: [ 0, 10, 0, 0 ] 
+                        },
+                        {
+                            text:`Peso(lb)`,
+                            style:"titleStyle",
+                            margin: [ 0, 10, 0, 0 ] 
+                        }
+
+                    ]
+                },
+                {
+                    columns:[
+                        {
+                            text:`${this.Edad}`,
+                            style:"contentStyle",
+                        },
+                        {
+                            text:`${this.Ocupacion}`,
+                            style:"contentStyle",
+                        },
+                        {
+                            text:`${this.Peso}`,
+                            style:"contentStyle",
+                        }
+
+                    ]
                 },
                 {
                     text:'Padecimientos y Alergias del paciente',
@@ -105,6 +157,33 @@ class pdfExpediente {
                         
                     },
                     margin: [ 0, 10, 0, 0 ] 
+                },
+                {
+                    text:'Tratamiento Medico actual',
+                    style:"titleStyle",
+                    margin: [ 0, 15, 0, 10 ] 
+                },
+                {
+                    style: 'tableExample',
+                    table:{
+                        widths: [200,200],
+                        body: [
+                            ['Medicamentos'],
+                            [
+                                
+                            ]
+                        ],
+                    },
+                    margin: [ 0, 10, 0, 0 ] 
+                },
+                {
+                    text:'Diagnostico actual',
+                    style:"titleStyle",
+                    margin: [ 0, 15, 0, 10 ] 
+                },
+                {
+                    text:`${this.Diagnostico}`,
+                    style:"diagnosticoStyle",
                 }
             ],
             styles:{
@@ -126,6 +205,10 @@ class pdfExpediente {
                 },
                 tableExample:{
                     alignment:'center'
+                },
+                diagnosticoStyle:{
+                    fontSize:16,
+                    alignment:'justify'
                 }
             }
             

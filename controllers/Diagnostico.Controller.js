@@ -11,4 +11,15 @@ async function nuevoDiagnostico(id_Cita,Detalle){
     }
 }
 
-module.exports = {nuevoDiagnostico}
+async function diagnosticoPaciente(idCita){
+    try {
+        let diagnostico = new Diagnosticos(idCita,"")
+
+        let data = await diagnostico.getDiagnosticoByCitaId()
+        return data[0]
+        
+    } catch (error) {
+        if (error) throw error;
+    }
+}
+module.exports = {nuevoDiagnostico,diagnosticoPaciente}
