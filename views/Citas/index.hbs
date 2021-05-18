@@ -154,6 +154,8 @@
                 
                 toastr.success(`${response.message}`)
                 toastr.info(`${response.messageEstado}`)
+
+                window.location = `/receta/generate?Medicamentos=${Medicamentos.value}&duracion:${duracion.value}`
       
                
             },
