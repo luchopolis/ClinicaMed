@@ -7,12 +7,12 @@ module.exports = (router) => {
 	router.get('/receta/generate',(req,res,next) => {
 
 		let {Medicamentos,duracion} = req.query
-		
+
 		let printer = new pdfMake(fonts);
 		let receta = new pdfReceta();
-
+		console.log()
 		let recetaT = JSON.stringify(receta.templateReceta())
-		recetaT = recetaT.replace('{{nombreMedico}}','Luis Caballero')
+		recetaT = recetaT.replace('{{nombreMedico}}',req.user.Username)
 		let recetaCompleta = recetaT.replace('{{Contenido}}',`${Medicamentos}`);
 
 		res.writeHead(200, 
