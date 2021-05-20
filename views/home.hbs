@@ -337,7 +337,12 @@
         url:`/Horarios/Medico/{{medico}}`,
         method:"GET",
         success:function(data){
-            $("#schedule-demo").jqs(data.Jornada);
+            console.log()
+            $("#schedule-demo").jqs({
+                mode:"read",
+                hour:24,
+                data:data.Jornada.data
+            });
             
         }
     })

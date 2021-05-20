@@ -54,5 +54,9 @@ hbs.handlebars.registerHelper('isRecepcion',(user) => {
     
 })
 
+hbs.handlebars.registerHelper('medicosJson',(data) => {
+    return JSON.stringify(data)
+})
+
 
 

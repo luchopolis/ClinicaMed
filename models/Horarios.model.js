@@ -38,6 +38,13 @@ class Horarios extends ModelBase{
 
         return horario;
     }
+
+    async updateHorario(Jornada,idHorario){
+        let sql = `UPDATE ${this.tableName} SET Jornada=${Jornada} WHERE ${this.id_Column}=${idHorario}`
+        
+        let update = await this.query(sql)
+        return update;
+    }
 }
 
 module.exports = Horarios

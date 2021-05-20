@@ -1,4 +1,4 @@
-const {actualHorarioMedico} = require('../../controllers/Horarios.Controller')
+const {actualHorarioMedico,updateMedicoHorario} = require('../../controllers/Horarios.Controller')
 
 module.exports = (router) => {
     router.get('/Horarios',async (req,res,next) => {
@@ -22,6 +22,20 @@ module.exports = (router) => {
         } catch (error) {
             next(error)
         }
+    })
+
+    router.post('/Horarios/Medico/:idHorario',async (req,res,next) => {
+        let {idHorario} = req.params
+        let {Jornada} = req.body
+
+        let updateSchedule = await updateMedicoHorario(idHorario,Jornada)
+        if(updateSchedule){
+            res.status(200).json({ message:"Horario actualizado"})
+
+        }else{
+            res.status(204).json({ message:"Problema en actualizar datos"})
+        }
+
     })
 
    

@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="/css/jquery.schedule.min.css">
+<style>
+    .loading {
+        width: 50px;
+        height: 50px;
+        border: 8px solid #d3d3d3;
+        border-top-color: #778899;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        display: none;
+        
+    }
+    .loader-row{
+        display: flex;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6">
+                        <h1 class="page-header">Configuracion horario medico</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DESDE AQUI -->
+            <div class="panel panel-default">
+                 <div class="panel-heading">
+
+                 </div>
+                 <div class="panel-body">
+                     <div class="col-lg-12">
+                        <h1 class="page-header">Asignacion de horario</h1>
+                        
+                        <div class="col-12">
+                            <button id="saveCalendar" class="btn btn-primary">Guardar</button>
+                        </div>
+                        <div class="row loader-row" >
+                            <div class="loading"></div>
+                        </div>
+                    </div>
+                     <div class="col-lg-12" style="margin-top: 30px;">
+                         <div class="row">
+                             <div id="schedule-medico"></div>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous"></script>
+<script src="/js/jquery.schedule.js"></script>
+
+<script>
+
+
+ $(document).ready(function(){
+    let saveBtn = document.querySelector('#saveCalendar')
+    let dataJornada;
+
+    let loader = document.querySelector('.loading')
+
+    $.ajax({
+        url:`/Horarios/Medico/{{medico}}`,
+        method:"GET",
+        success:function(data){
+           dataJornada = data.Jornada
+            $("#schedule-medico").jqs({
+                mode:"edit",
+                hour:24,
+                data:dataJornada
+            });
+
+            
+            saveBtn.addEventListener('click',(e) => {
+                let dataNewShc = $("#schedule-medico").jqs('export');
+                loader.style.display = "flex";
+                $.ajax({
+                    url:`/Horarios/Medico/${data.id_Horario}`,
+                    method:"POST",
+                    data:{"Jornada":dataNewShc},
+                    success:function(data){
+                        loader.style.display = "none";
+                        toastr.success(data.message)
+                    },
+                    error:function(err){
+                        toastr.error(err.message)
+                        loader.style.display = "none";
+                    }
+                })
+                
+
+            })
+            
+        }
+    })
+    
+
+  })
+
+</script>

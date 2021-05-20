@@ -69,4 +69,16 @@ async function asignMedicoHorario(idMedico,Jornada){
         if(error) throw error;  
     }
 }
-module.exports = {getAllHorarios,actualHorarioMedico,asignMedicoHorario}
+
+async function updateMedicoHorario(idHorario,Jornada){
+    try {
+        let updateHorario = new Horarios()
+        let updated = await updateHorario.updateHorario(JSON.stringify(Jornada),idHorario)
+
+        return (updated.affectedRows === 1) ? true : false
+        
+    } catch (error) {
+        if(error) throw error;  
+    }
+}
+module.exports = {getAllHorarios,actualHorarioMedico,asignMedicoHorario,updateMedicoHorario}

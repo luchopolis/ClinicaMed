@@ -1,0 +1,67 @@
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6">
+                        <h1 class="page-header">Medicos actuales</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                             <div class="row">
+                                <div class="col-lg-10" style="font-size: 20px;  vertical-align: middle;">
+                                    <div>
+                                        <p>Listado de medicos</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 right"><button class="btn btn-primary" id="btnNuevoPaciente" style="font-size: 18px" >Crear Paciente</button></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <table id="medicosTable" class="display" style="width:100%; font-size:17px;">
+                           
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script>
+    
+    $(document).ready(function(){
+       let medicosRegistro = '{{{medicosJson medicos}}}'
+       let data = JSON.parse(medicosRegistro)
+         $('#medicosTable').DataTable(
+            {
+                "data":data,
+                "ordering":false,
+                "columns":[
+                    {"title":"Nombres"},
+                    {"title":"Apellidos"},
+                    {"title":"DUI"},
+                    {"title":"Telefono"},
+                    {"title":"--- ---"}
+                    
+                ],
+                "columnDefs":[{
+                    "targets":4,
+                    "render": function(data,type,full,meta){
+                        
+                        return `<a href="/config/medicos/${data}"><i class="fa fa-address-card" style="font-size:30px;"></i></a>`
+                    }
+                }]
+            }
+        );
+    })
+</script>

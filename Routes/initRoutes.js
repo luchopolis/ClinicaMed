@@ -20,6 +20,7 @@ require('./web/pacientesWeb.Routes')(router)
 require('./web/empleados.routes')(router)
 require('./web/Horarios.routes')(router)
 require('./web/receta.route.js')(router)
+require('./web/config.routes')(router)
 //Para verificar si las citas vencieron
 let {citasToClose} = require('../controllers/CitasC')
 
