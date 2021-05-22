@@ -8,7 +8,7 @@ module.exports = (router) => {
 
     router.get('/medicos',isLoggedIn,async (req,res,next) => {
         try {
-            let data = await pacientes()
+            let data = await medicos()
             //res.status(200).json(data)
             res.render('../views/Medicos/Medico',{layout:"main",pacientes:data,total:data.length})
         } catch (error) {
