@@ -1,0 +1,159 @@
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Información Del Medico</h1>
+                </div>
+            </div>
+            {{#if medico}}
+            <div class="row p-2" style="height: 65px;">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading text-center" style="font-size: 20px;">
+                                    Información del Medico
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center" style="margin-top: 10px;">
+                                            <b style="font-size: 22px;">{{medico.NombreMedico}}</b>
+                                        </div>
+                                        <div class="col-lg-12 text-center " style="margin-top: 10px;">
+                                            <p style="font-size:18px;">{{medico.Tipo_Sangre}}</p>
+                                        </div>
+
+                                        <div class="row text-center"
+                                            style="margin-top: 80px;padding:0px 10px 0px 10px;">
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-default">
+                                                    <p>{{medico.Peso}}</p>
+                                                    <p><b>Peso(lb)</b></p>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-default">
+                                                    <p style="text-transform: capitalize;">{{medico.Ocupacion}}</p>
+                                                    <p><b>Ocupación</b></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="panel panel-default">
+                                                    <p>{{medico.Edad}}</p>
+                                                    <p><b>Edad</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6" style="height: 130px;">
+                    <div class="row">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                Alergias
+                            </div>
+                            <div class="panel-body" style="height: 65px;">
+                                <div class="col-lg-12">
+                                    <ul>
+                                        <li>{{medico.Alergias}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="height: 130px;">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                Padecimientos
+                            </div>
+                            <div class="panel-body" style="height: 77px;">
+                                <div class="col-lg-12">
+                                    <ul>
+                                        <li>{{medico.Padecimientos}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {{/if}}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Tratamiento médico actual</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Tratamiento médico actual
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped" style="width:100%">
+                                    <tr>
+                                        <th>Medicamentos</th>
+                                        <th>Duración del tratamiento</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>xx                                                                                                                                                                                 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Historial de citas médicas</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Registro de todas las citas previas
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha de cita</th>
+                                            <th>Hora</th>
+                                            <th>Medico responsable</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#if medicoCitas}}
+                                        {{#each medicoCitas}}
+                                            <tr>
+                                                <td>{{this.FechaCita}}</td>
+                                                <td>{{this.Hora}}</td>
+                                                <td>{{this.Doctor}}</td>
+                                                <td>{{this.Estado}}</td>
+                                            </tr>
+                                        {{/each}}
+                                        {{/if}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+{{>footer}}
