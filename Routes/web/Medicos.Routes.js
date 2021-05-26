@@ -1,8 +1,8 @@
-const {medico,createMedico,updateMedico,getMedico} = require('../controllers/Medicos')
+const {medicos,createMedico,updateMedico,getMedico} = require('../../controllers/Medicos')
 
 //middlleware auth token
-/* const verifyJwtInbound = require('../middlewares/auth/jwtVerify')
-const { isLoggedIn } = require('../middlewares/auth/authLogin') */
+/* const verifyJwtInbound = require('../middlewares/auth/jwtVerify')*/
+const { isLoggedIn } = require('../../middlewares/auth/authLogin') 
 
 module.exports = (router) => {
 

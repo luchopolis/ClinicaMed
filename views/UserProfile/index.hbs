@@ -1,0 +1,118 @@
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6">
+                        <h1 class="page-header">Gestiona tu cuenta</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="button" style="outline: none;" id="editBtn" class="btn btn-primary" value="Editar">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form action="/profile/update" method="POST" name="profileDetails">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="col-lg-6">
+                                        <label for="">Nombres</label>
+                                        <input type="text" class="form-control form-profile" name="Nombres" value="{{profileInfo.Nombres}}"
+                                            disabled=true>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="">Apellidos</label>
+                                        <input type="text" class="form-control form-profile" name="Apellidos" value="{{profileInfo.Apellidos}}"
+                                            disabled=true>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="">Telefono principal</label>
+                                        <input type="text" class="form-control form-profile" name="Telefono" value="{{profileInfo.Telefono}}"
+                                            disabled=true>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="">Telefono Secundario</label>
+                                        <input type="text" class="form-control form-profile" name="TelefonoSecundario" value="{{profileInfo.Telefono2}}"
+                                            disabled=true>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="">DUI</label>
+                                        <input type="text" class="form-control form-profile" name="DUI" value="{{profileInfo.DUI}}"
+                                            disabled=true>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="">Correo</label>
+                                        <input type="text" class="form-control form-profile" name="email" value="{{profileInfo.email}}"
+                                            disabled=true>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-lg-12">
+                                <label for="">Direccion actual</label>
+                                <input type="text"  value="{{profileInfo.Direccion}}" name="Direccion" class="form-control form-profile"
+                                    disabled=true>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input type="submit" class="btn btn-success form-profile" style="width:100%" id="save"
+                                    value="Guardar" disabled=true>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous"></script>
+<script>
+    {{#if successlogin}}
+        toastr.success('{{ successlogin }}')
+    {{/if}}
+    {{#if loginwrong}}
+        toastr.error('{{ loginwrong }}')
+    {{/if}}
+
+    let enableEdit = document.querySelector("#editBtn")
+    let inputsDisabled = document.querySelectorAll(".form-profile")
+
+    enableEdit.addEventListener('click',(e) => {
+        inputsDisabled.forEach(input => {
+            switch(input.disabled){
+                case true:
+                    input.disabled = false;
+                    break;
+                case false:
+                    input.disabled = true;
+                    break;
+            }            
+        })
+    })
+</script>

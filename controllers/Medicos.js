@@ -71,4 +71,4 @@ async function getMedico(id){
     }
 }
 
-module.exports = { medicos }
+module.exports = { medicos,getMedico,updateMedico,createMedico }

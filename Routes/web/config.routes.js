@@ -1,7 +1,8 @@
 const {medicos} = require('../../controllers/Medicos')
+const {isLoggedIn} = require('../../middlewares/auth/authLogin')
 
 module.exports = (router) => {
-    router.get('/config/medicos',async (req,res,next) => {
+    router.get('/config/medicos',isLoggedIn,async (req,res,next) => {
         let loadMedicos = await medicos();
         let medicosList = []
 
@@ -12,12 +13,12 @@ module.exports = (router) => {
         });
 
 
-        res.render('../views/HorarioMedicos/index',{layout:"main",medicos:medicosList})
+        res.render('../views/ConfigMedicos/index',{layout:"main",medicos:medicosList})
     })
 
     router.get('/config/medicos/:idMedico',async (req,res,next) => {
         let {idMedico} = req.params
 
-        res.render('../views/HorarioMedicos/show',{layout:"main",medico:idMedico})
+        res.render('../views/ConfigMedicos/show',{layout:"main",medico:idMedico})
     })
 }
