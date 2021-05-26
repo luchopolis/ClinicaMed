@@ -10,7 +10,7 @@ module.exports = (router) => {
         try {
             let data = await medicos()
             //res.status(200).json(data)
-            res.render('../views/Medicos/Medico',{layout:"main",pacientes:data,total:data.length})
+            res.render('../views/Medicos/Medico',{layout:"main",medico:data,total:data.length})
         } catch (error) {
            next(error)
         }
@@ -61,11 +61,11 @@ module.exports = (router) => {
     router.get('/Medicos/:idMedico',async (req,res,next) => {
         try {
             
-            let paciente = await getMedico(req.params.idMedico)
-            if(paciente.length === 0){
-                res.status(200).json({message:"No hay datos",paciente})
+            let medico = await getMedico(req.params.idMedico)
+            if(medico.length === 0){
+                res.status(200).json({message:"No hay datos",medico})
             }else{
-                res.status(200).json(paciente)
+                res.status(200).json(medico)
             }
             
         } catch (error) {
