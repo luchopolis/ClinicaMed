@@ -12,6 +12,7 @@ require('./HorariosControl.routes')(router)
 require('./auth/auth.routes')(router)
 
 //WEB ROUTES
+require('./web/Medicos.Routes')(router)
 require('./web/login.routes')(router)
 require('./web/home.routes')(router)
 require('./web/citas.routes')(router)
