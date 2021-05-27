@@ -77,6 +77,7 @@
                                                                     <th>Nombres</th>
                                                                     <th>Apellidos</th>
                                                                     <th>Hora asignada</th>
+                                                                    <th></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="citaMedicoBody">
@@ -162,7 +163,8 @@
                 table.row.add([
                     cita.Nombres,
                     cita.Apellidos,
-                    cita.Hora
+                    cita.Hora,
+                    `<a href='/citas/edit/${cita.id_Cita}'>Editar</a>`
 
                 ]).draw(false)
             })
@@ -182,7 +184,8 @@
                 table.row.add([
                     cita.Nombres,
                     cita.Apellidos,
-                    cita.Hora
+                    cita.Hora,
+                    `<a href='/citas/edit/${cita.id_Cita}'>Editar</a>`
 
                 ]).draw(false)
             })

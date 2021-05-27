@@ -1,0 +1,50 @@
+<div id="wrapper">
+    {{>sidebar}}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-6">
+                        <h1 class="page-header">Usuarios del sistema</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="table-users">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Usuario</th>
+                                            <th scope="col">Rol</th>
+                                            <th scope="col">Permisos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {{#each users}}
+                                        <tr>
+
+
+                                            <td>{{this.Username}}</td>
+                                            <td>{{this.Rol}}</td>
+                                            <td>{{this.Permisos}}</td>
+                                            <td><a href="#"><i class="fa fa-address-card" style="font-size:30px;"></i></a></td>
+
+                                        </tr>
+                                        {{/each}}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}

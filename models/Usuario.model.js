@@ -13,6 +13,10 @@ class UsuarioModel extends ModelBase{
         this.query = promisifyQuery(this.conexion.connection.query,this.conexion.connection)
     }
 
+    async getAll(){
+        const users = await this.query(`SELECT * FROM ${this.tableName}`)
+        return users
+    }
 
     async foundUserByName(username){
         try {
