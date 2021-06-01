@@ -108,12 +108,18 @@
     $(document).ready(function(){
         let btnSave = $("#citaNuevaBtn")
         let loader = document.querySelector('.loading')
-
+        let medicos = document.getElementById('Medicos')
+        let medico = medicos.options[medicos.selectedIndex]
        
         let dataCita = document.getElementById("citaFormulario")
         let objCita = {}
 
+        medicos.addEventListener('change',(e) => {
+            medico = medicos.options[medicos.selectedIndex]
+        })
+
         btnSave.click(function(e){
+            
             e.preventDefault()
             let wss = ws
         
@@ -135,7 +141,7 @@
                     
                     loader.style.display = "none";
                     toastr.success(response.message)
-                    wss.send(JSON.stringify({status: "complete"}))                   
+                    wss.send(JSON.stringify({status: "complete",Medico: medico.text}))                   
                     
                 },
                 error:function(response){
