@@ -83,12 +83,12 @@ app.use('/private', isLoggedIn,express.static(path.join(__dirname, 'scripts')));
 app.use(express.static('public'))
 
 
+//WebSockerServer
+const wsServer = require('./lib/webSocketServer')
+wsServer(app)
 //CALL API ROUTES
-
 initApiRoutes(app)
 //CAL WEB ROUTES
-
-
 app.listen(config.PORT,(error) => {
     if(error) throw error;
 
